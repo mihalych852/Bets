@@ -25,12 +25,12 @@ namespace BetsService.Domain
         /// <summary>
         /// Верно, если событие завершено
         /// </summary>
-        public bool IsOver { get; set; }
+        public bool IsOver { get; set; } = false;
 
         /// <summary>
         /// Верно, если событие отменено
         /// </summary>
-        public bool IsCanceled { get; set; }
+        public bool IsCanceled { get; set; } = false;
 
         /// <summary>
         /// Возможные исходы события

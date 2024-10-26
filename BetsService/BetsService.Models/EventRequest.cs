@@ -21,6 +21,11 @@ namespace BetsService.Models
         /// <summary>
         /// Дата и время окончания приема ставок на событие
         /// </summary>
-        public DateTime BetsEndTime { get; set;}
+        public DateTime BetsEndTime { get; set; }
+
+        /// <summary>
+        /// Создатель
+        /// </summary>
+        public required string CreatedBy { get; set; }
     }
 }

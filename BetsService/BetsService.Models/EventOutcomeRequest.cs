@@ -12,5 +12,10 @@ namespace BetsService.Models
         /// Идентификатор события
         /// </summary>
         public Guid EventId { get; set; }
+
+        /// <summary>
+        /// Создатель
+        /// </summary>
+        public required string CreatedBy { get; set; }
     }
 }
