@@ -3,6 +3,7 @@ using Bets.Abstractions.Domain.DTO;
 using Bets.Abstractions.Domain.Repositories.Interfaces;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using System.Runtime.InteropServices.Marshalling;
+using Microsoft.Extensions.Configuration;
 
 namespace Bets.Abstractions.DataAccess.EF.Repositories
 {
@@ -21,7 +22,11 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         /// Конструктор
         /// </summary>
         /// <param name="context">Контекст хранилища</param>
-        public LaterDeletedEntityRepository(DbContext context) : base(context) { }
+        /// <param name="config">Конфигурация. 
+        /// Необходима для определения значения _shouldSaveUniversalTimes
+        /// , указывающего, стоит ли преобразовывать автоматически генерируемые перед сохранением даты и время в универсальные
+        /// , чтобы избежать проблем с 'timestamp with time zone' при использовании Npgsql</param>
+        public LaterDeletedEntityRepository(DbContext context, IConfiguration config) : base(context, config) { }
 
         /// <summary>
         /// Помечает сущность для удаления
@@ -31,7 +36,7 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         public async Task<int> DeleteAsync(DeleteRequest request)
         {
             var deletedCount = await _entitySet.Where(x => x.Id == request.Id && x.DeletedDate == null)
-                .ExecuteUpdateAsync(u => u.SetProperty(p => p.DeletedDate, DateTime.Now).SetProperty(p => p.DeletedBy, request.DeletedBy));
+                .ExecuteUpdateAsync(u => u.SetProperty(p => p.DeletedDate, GetNow()).SetProperty(p => p.DeletedBy, request.DeletedBy));
             return deletedCount;  
         }
 
@@ -43,7 +48,7 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         public async Task<int> DeleteRangeAsync(DeleteListRequest request)
         {
             var deletedCount = await _entitySet.Where(x => request.Ids.Contains(x.Id) && x.DeletedDate == null)
-                .ExecuteUpdateAsync(u => u.SetProperty(p => p.DeletedDate, DateTime.Now).SetProperty(p => p.DeletedBy, request.DeletedBy));
+                .ExecuteUpdateAsync(u => u.SetProperty(p => p.DeletedDate, GetNow()).SetProperty(p => p.DeletedBy, request.DeletedBy));
             return deletedCount;   
         }
 

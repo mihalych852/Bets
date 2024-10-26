@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Bets.Abstractions.Domain.DTO;
 using Bets.Abstractions.Domain.Repositories.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace Bets.Abstractions.DataAccess.EF.Repositories
 {
@@ -13,11 +14,24 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
       , ICanCreateEntitiesRepository<T>, IIdentifiableEntitiesRepository<T>, IRepository<T>
       where T : CreatedEntity
     {
+        protected readonly bool _shouldSaveUniversalTimes;
+
         /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="context">Контекст хранилища</param>
-        public CreatedEntityRepository(DbContext context) : base(context) { }
+        /// <param name="config">Конфигурация. 
+        /// Необходима для определения значения _shouldSaveUniversalTimes
+        /// , указывающего, стоит ли преобразовывать автоматически генерируемые перед сохранением даты и время в универсальные
+        /// , чтобы избежать проблем с 'timestamp with time zone' при использовании Npgsql</param>
+        public CreatedEntityRepository(DbContext context, IConfiguration config) : base(context) 
+        {
+            var shouldSaveUniversalTimes = config.GetSection("ShouldSaveUniversalTimes").Value;
+            if(!bool.TryParse(shouldSaveUniversalTimes, out _shouldSaveUniversalTimes))
+            {
+                _shouldSaveUniversalTimes = false;
+            }
+        }
 
         /// <summary>
         /// Добавляет новую сущность в хранилище
@@ -25,7 +39,7 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         /// <param name="entity">Новые данные</param>
         public virtual async Task AddAsync(T entity)
         {
-            entity.CreatedDate = DateTime.Now;
+            entity.CreatedDate = GetNow();
             await _entitySet.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
         }
@@ -39,11 +53,23 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
             _dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
             foreach (var entity in entities)
             {
-                entity.CreatedDate = DateTime.Now;
+                entity.CreatedDate = GetNow();
             }
             await _entitySet.AddRangeAsync(entities);
             await _dbContext.SaveChangesAsync();
             _dbContext.ChangeTracker.AutoDetectChangesEnabled = true;
+        }
+
+        protected DateTime GetNow()
+        {
+            if (_shouldSaveUniversalTimes)
+            {
+                return DateTime.Now.ToUniversalTime();
+            }
+            else
+            {
+                return DateTime.Now;
+            }
         }
     }
 }

@@ -9,7 +9,9 @@ namespace BetsService.Services.Helpers
         public MappingProfile()
         {
             CreateMap<EventRequest, Events>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
+                .ForMember(d => d.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
+                .ForMember(d => d.EventStartTime, opt => opt.MapFrom(src => src.EventStartTime.ToUniversalTime()))
+                .ForMember(d => d.BetsEndTime, opt => opt.MapFrom(src => src.BetsEndTime.ToUniversalTime()));
             CreateMap<Events, EventResponse>();
 
             CreateMap<EventOutcomeRequest, EventOutcomes>()

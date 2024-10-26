@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Bets.Abstractions.Domain.DTO;
 using Bets.Abstractions.Domain.Repositories.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace Bets.Abstractions.DataAccess.EF.Repositories
 {
@@ -18,7 +19,11 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         /// Конструктор
         /// </summary>
         /// <param name="context">Контекст хранилища</param>
-        public ModifiableEntityRepository(DbContext context) : base(context) { }
+        /// <param name="config">Конфигурация. 
+        /// Необходима для определения значения _shouldSaveUniversalTimes
+        /// , указывающего, стоит ли преобразовывать автоматически генерируемые перед сохранением даты и время в универсальные
+        /// , чтобы избежать проблем с 'timestamp with time zone' при использовании Npgsql</param>
+        public ModifiableEntityRepository(DbContext context, IConfiguration config) : base(context, config) { }
 
         /// <summary>
         /// Изменяет в хранилище информацию о сущности
@@ -26,7 +31,7 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         /// <param name="entity">Изменяемые данные</param>
         public virtual async Task UpdateAsync(T entity)
         {
-            entity.ModifiedDate = DateTime.Now;
+            entity.ModifiedDate = GetNow();
             _entitySet.Update(entity);
             await _dbContext.SaveChangesAsync();
         }
@@ -37,7 +42,7 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         /// <param name="entity">Изменяемые данные</param>
         public virtual async Task UpdateAsync(IEnumerable<T> entitys)
         {
-            var modifiedDate = DateTime.Now;
+            var modifiedDate = GetNow();
             foreach (var entity in entitys)
             {
                 entity.ModifiedDate = modifiedDate;
