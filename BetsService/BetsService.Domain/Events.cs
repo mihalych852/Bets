@@ -23,14 +23,9 @@ namespace BetsService.Domain
         public DateTime BetsEndTime { get; set; }
 
         /// <summary>
-        /// Верно, если событие завершено
+        /// Статус события
         /// </summary>
-        public bool IsOver { get; set; } = false;
-
-        /// <summary>
-        /// Верно, если событие отменено
-        /// </summary>
-        public bool IsCanceled { get; set; } = false;
+        public EventsStatus Status { get; set; }
 
         /// <summary>
         /// Возможные исходы события

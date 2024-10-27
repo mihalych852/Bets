@@ -1,4 +1,5 @@
-﻿
+﻿using BetsService.Models.Enums;
+
 namespace BetsService.Models
 {
     public sealed class EventResponse
@@ -24,14 +25,9 @@ namespace BetsService.Models
         public DateTime BetsEndTime { get; set; }
 
         /// <summary>
-        /// Верно, если событие завершено
+        /// Статус события
         /// </summary>
-        public bool IsOver { get; set; }
-
-        /// <summary>
-        /// Верно, если событие отменено
-        /// </summary>
-        public bool IsCanceled { get; set; }
+        public EventsStatus Status { get; set; }
 
         /// <summary>
         /// Возможные исходы события
