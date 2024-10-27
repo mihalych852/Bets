@@ -20,12 +20,12 @@ namespace BetsService.Domain
         /// <summary>
         /// Верно, если исход завершился успехом
         /// </summary>
-        public bool? IsHappened { get; set; }
+        public bool? IsHappened { get; set; } = null;
 
         /// <summary>
         /// Верно, если событие закрыто или отменено
         /// </summary>
-        public bool BetsClosed { get; set; }
+        public bool BetsClosed { get; set; } = false;  
 
         /// <summary>
         /// Идентификатор события

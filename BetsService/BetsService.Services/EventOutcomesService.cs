@@ -48,7 +48,7 @@ namespace BetsService.Services
             }
         }
 
-        public async Task<EventResponse> GetEventOutcomeAsync(Guid id)
+        public async Task<EventOutcomeResponse> GetEventOutcomeAsync(Guid id)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace BetsService.Services
                     throw new NotFoundException($"Исход с идентификатором {id} не найден.");
                 }
 
-                return _mapper.Map<EventResponse>(response);
+                return _mapper.Map<EventOutcomeResponse>(response);
             }
             catch (Exception ex)
             {
@@ -67,13 +67,13 @@ namespace BetsService.Services
             }
         }
 
-        public async Task<List<EventResponse>> GetListEventOutcomesAsync()
+        public async Task<List<EventOutcomeResponse>> GetListEventOutcomesAsync()
         {
             try
             {
                 var response = await _repository.GetAllAsync();
 
-                return _mapper.Map<List<EventResponse>>(response);
+                return _mapper.Map<List<EventOutcomeResponse>>(response);
             }
             catch (Exception ex)
             {
