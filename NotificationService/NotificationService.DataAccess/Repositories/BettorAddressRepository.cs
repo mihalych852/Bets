@@ -1,5 +1,6 @@
 ﻿using Bets.Abstractions.DataAccess.EF.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NotificationService.Domain.Directories;
 
 namespace NotificationService.DataAccess.Repositories
@@ -14,7 +15,7 @@ namespace NotificationService.DataAccess.Repositories
 
 
 
-        public BettorAddressRepository(IDbContextFactory<DatabaseContext> contextFactory) : base(contextFactory.CreateDbContext()) { }
+        public BettorAddressRepository(IDbContextFactory<DatabaseContext> contextFactory, IConfiguration config) : base(contextFactory.CreateDbContext(), config) { }
 
         /// <summary>
         /// Получение сущности по идентификатору

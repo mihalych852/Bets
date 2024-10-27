@@ -1,6 +1,7 @@
 ﻿using Bets.Abstractions.DataAccess.EF.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Configuration;
 using NotificationService.DataAccess.DTO;
 using NotificationService.Domain;
 
@@ -15,7 +16,7 @@ namespace NotificationService.DataAccess.Repositories
         //public IncomingMessagesRepository(DbContext context) : base(context) { }
 
 
-        public IncomingMessagesRepository(IDbContextFactory<DatabaseContext> contextFactory) : base(contextFactory.CreateDbContext()) { }
+        public IncomingMessagesRepository(IDbContextFactory<DatabaseContext> contextFactory, IConfiguration config) : base(contextFactory.CreateDbContext(), config) { }
 
         /// <summary>
         /// Выбрать следующую пачку сообщений
