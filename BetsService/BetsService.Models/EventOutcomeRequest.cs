@@ -17,5 +17,10 @@ namespace BetsService.Models
         /// Создатель
         /// </summary>
         public required string CreatedBy { get; set; }
+
+        /// <summary>
+        /// Комиссия со ставок на этот исход
+        /// </summary>
+        public decimal Commision { get; set; } = .025m;
     }
 }

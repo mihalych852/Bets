@@ -32,5 +32,10 @@ namespace BetsService.Models
         /// Кто последний раз изменял
         /// </summary>
         public string? ModifiedBy { get; set; }
+
+        /// <summary>
+        /// Комиссия со ставок на этот исход
+        /// </summary>
+        public decimal Commision { get; set; } = .025m;
     }
 }

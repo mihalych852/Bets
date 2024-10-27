@@ -36,5 +36,16 @@ namespace BetsService.Domain
         /// Событие, для которого возможен этот исход
         /// </summary>
         public required virtual Events Event { get; set; }
+
+        /// <summary>
+        /// Используется только для определения связи со ставками. 
+        /// Нет смысла где-то выводить или ещё как-то использовать этот список.
+        /// </summary>
+        public List<Bets> Bets { get; } = [];
+
+        /// <summary>
+        /// Комиссия со ставок на этот исход
+        /// </summary>
+        public decimal Commision { get; set; } = .025m;
     }
 }

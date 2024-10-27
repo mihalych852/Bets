@@ -32,5 +32,10 @@ namespace BetsService.Models
         /// Идентификатор события
         /// </summary>
         public Guid EventId { get; set; }
+
+        /// <summary>
+        /// Комиссия со ставок на этот исход
+        /// </summary>
+        public decimal Commision { get; set; }
     }
 }

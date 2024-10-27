@@ -28,7 +28,7 @@ namespace BetsService.Services
         {
             if (request == null)
             {
-                var msg = "attempt to transmit a messenger without data";
+                var msg = "attempt to create event outcome without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
                 _logger.LogError(ex, $"[EventOutcomesService][AddEventOutcomeAsync] ArgumentNullException: {msg}");
                 throw ex;
