@@ -20,7 +20,7 @@ namespace BetsService.Domain
         /// <summary>
         /// Сумма ставки
         /// </summary>
-        public decimal Amount { get; set; } = 100;
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// Идентификатор события, на которое делается ставка

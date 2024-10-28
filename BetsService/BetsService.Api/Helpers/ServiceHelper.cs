@@ -23,6 +23,7 @@ namespace BetsService.Api.Helpers
             services
                 .AddScoped<EventsService>()
                 .AddScoped<EventOutcomesService>()
+                .AddScoped<BettingService>()
                 .AddScoped<DbContext, DatabaseContext>();
 
             return services;
