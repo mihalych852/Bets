@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BetsService.Models;
 using BetsService.Services;
+using BetsService.DataAccess.DTO;
 
 namespace BetsService.Api.Controllers
 {
@@ -100,6 +101,22 @@ namespace BetsService.Api.Controllers
             {
                 _logger.LogError(ex, ex.Message);
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("states")]
+        public async Task<IActionResult> UpdateStatesAsync(BetsStateUpdateRequest request)
+        {
+            try
+            {
+                var updateCount = await _service.UpdateStatesAsync(request);
+                return Ok(UpdateResponse.CreateSuccessResponse(updateCount));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(UpdateResponse.CreateErrorResponse(ex.Message));
             }
         }
     }

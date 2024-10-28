@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using BetsService.Services.Exceptions;
 using BetsService.Models;
 using BetsService.DataAccess.Repositories;
+using BetsService.DataAccess.DTO;
 
 namespace BetsService.Services
 {
@@ -94,6 +95,20 @@ namespace BetsService.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"[BettingService][GetListByBettorIdAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<int> UpdateStatesAsync(BetsStateUpdateRequest request)
+        {
+            try
+            {
+                var count = await _repository.UpdateStatesAsync(request);
+                return count;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[BettingService][UpdateStatesAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
