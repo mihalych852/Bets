@@ -15,7 +15,11 @@ namespace NotificationService.Api.Helpers
                 throw new Exception($"Connection string {connectionName} not defined");
 
             //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
-            services.AddDbContextFactory<DatabaseContext>(options => options.UseSqlServer(connectionString));
+            //services.AddDbContextFactory<DatabaseContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContextFactory<DatabaseContext>(options => options.UseNpgsql(string.Format(connectionString
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBBASE")
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBUSER")
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBPASSWORD"))));
 
             services
                 .AddScoped<IncomingMessagesService>()

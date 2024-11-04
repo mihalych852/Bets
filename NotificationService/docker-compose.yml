@@ -1,0 +1,29 @@
+
+services:
+  notificationservice:
+    image: ${DOCKER_REGISTRY-}notificationservice
+    build:
+      context: .
+      dockerfile: NotificationService.Api/Dockerfile
+    ports:
+      - "5045:8080"
+      - "7283:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
+      - ASPNETCORE_DBPASSWORD=${ASPNETCORE_DBPASSWORD}
+      - ASPNETCORE_DBBASE=${ASPNETCORE_DBBASE}
+    depends_on:
+    - notificationDb  
+  notificationDb:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${ASPNETCORE_DBBASE}
+      POSTGRES_USER: ${ASPNETCORE_DBUSER}
+      POSTGRES_PASSWORD: ${ASPNETCORE_DBPASSWORD}
+    ports:
+      - "5435:${ASPNETCORE_DBPORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:

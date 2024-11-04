@@ -4,8 +4,6 @@ using NotificationService.Domain.Directories;
 using NotificationService.Models;
 using NotificationService.Services.Exceptions;
 using NotificationService.DataAccess.Repositories;
-using System.Net;
-using Azure.Core;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
 
 namespace NotificationService.Services
