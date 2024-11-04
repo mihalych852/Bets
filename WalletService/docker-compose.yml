@@ -1,0 +1,24 @@
+
+services:
+  walletservice:
+    image: ${DOCKER_REGISTRY-}walletservice
+    build:
+      context: .
+      dockerfile: WalletService.Api/Dockerfile
+    ports:
+      - "5187:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_DBBASE=db_promocode
+    depends_on:
+    - mongoDbWallet  
+  mongoDbWallet:
+    image: mongo:latest
+    environment:
+      MONGO_DB: db_wallet
+    ports:
+      - "27044:27017"
+    volumes:
+      - mongo_data:/var/lib/mongo/data
+volumes:
+  mongo_data:
