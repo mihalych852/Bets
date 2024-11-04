@@ -4,7 +4,7 @@ namespace WalletService.Domain
     /// <summary>
     /// Кошелек
     /// </summary>
-    public class Wallets
+    public class Wallets 
     {
         /// <summary>
         /// Идентификатор игрока - его же будем использовать в качестве идентификатора кошелька. 

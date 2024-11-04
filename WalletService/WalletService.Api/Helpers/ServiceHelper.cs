@@ -12,7 +12,9 @@ namespace WalletService.Api.Helpers
 
             services
                 .AddScoped<WalletsService>()
-                .AddScoped<DbContext, MongoDBContext>();
+                .AddScoped<DbContext, MongoDBContext>()
+
+                .AddDbContext<MongoDBContext>();
 
             return services;
         }

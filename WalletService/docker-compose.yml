@@ -7,9 +7,10 @@ services:
       dockerfile: WalletService.Api/Dockerfile
     ports:
       - "5187:8080"
+      - "7011:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_DBBASE=db_promocode
+      - ASPNETCORE_DBBASE=db_wallet
     depends_on:
     - mongoDbWallet  
   mongoDbWallet:

@@ -31,7 +31,10 @@ namespace WalletService.DataAccess
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Transactions>().HasKey(e => e.Id);
+
             modelBuilder.Entity<Wallets>().HasKey(e => e.BettorId);
+            modelBuilder.Entity<Wallets>(builder =>
+                builder.Property(entity => entity.BettorId).HasElementName("_id"));
         }
     }
 }
