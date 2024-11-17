@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Abstractions.DataAccess.EF" Version="1.0.0" />
+    <PackageReference Include="Abstractions.Domain" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -17,15 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NotificationService.Domain\NotificationService.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DataAccess.EF">
-      <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\DataAccess.EF.dll</HintPath>
-    </Reference>
-    <Reference Include="Domain">
-      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

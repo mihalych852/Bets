@@ -7,19 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotificationService.Models\NotificationService.Models.csproj" />
+    <PackageReference Include="Abstractions.Client" Version="1.0.0" />
+    <PackageReference Include="Abstractions.Domain" Version="1.0.0" />
+    <PackageReference Include="Abstractions.Model" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Client">
-      <HintPath>..\..\Abstractions\Client\bin\Debug\net8.0\Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Domain">
-      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="Model">
-      <HintPath>..\..\Abstractions\Model\bin\Debug\net8.0\Model.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\NotificationService.Models\NotificationService.Models.csproj" />
   </ItemGroup>
 
 </Project>

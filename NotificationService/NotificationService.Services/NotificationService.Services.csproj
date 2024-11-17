@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Abstractions.DataAccess.EF" Version="1.0.0" />
+    <PackageReference Include="Abstractions.Domain" Version="1.0.0" />
+    <PackageReference Include="Abstractions.HostedService" Version="1.0.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
@@ -17,18 +20,6 @@
     <ProjectReference Include="..\NotificationService.Domain\NotificationService.Domain.csproj" />
     <ProjectReference Include="..\NotificationService.MailServices\NotificationService.MailServices.csproj" />
     <ProjectReference Include="..\NotificationService.Models\NotificationService.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DataAccess.EF">
-      <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\DataAccess.EF.dll</HintPath>
-    </Reference>
-    <Reference Include="Domain">
-      <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="HostedService">
-      <HintPath>..\..\Abstractions\HostedService\bin\Debug\net8.0\HostedService.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

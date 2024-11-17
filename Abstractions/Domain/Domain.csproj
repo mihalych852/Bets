@@ -4,6 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Abstractions.$(AssemblyName)</Title>
+    <PackageId>Abstractions.$(AssemblyName)</PackageId>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="rem xcopy /y &quot;bin\$(ConfigurationName)\Abstractions.$(AssemblyName).$(VersionPrefix).nupkg&quot;  &quot;..\..\packages&quot;" />
+  </Target>
 
 </Project>
