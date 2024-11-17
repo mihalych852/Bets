@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Abstractions.Model" Version="1.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
@@ -17,12 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WalletService.Models\WalletService.Models.csproj" />
     <ProjectReference Include="..\WalletService.Service\WalletService.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Model">
-      <HintPath>..\..\Abstractions\Model\bin\Debug\net8.0\Model.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

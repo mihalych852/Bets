@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Abstractions.Domain" Version="1.0.0" />
+    <PackageReference Include="Abstractions.Model" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,15 +25,6 @@
     <ProjectReference Include="..\BetsService.DataAccess\BetsService.DataAccess.csproj" />
     <ProjectReference Include="..\BetsService.Models\BetsService.Models.csproj" />
     <ProjectReference Include="..\BetsService.Services\BetsService.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Domain">
-      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="Model">
-      <HintPath>..\..\Abstractions\Model\bin\Debug\net8.0\Model.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

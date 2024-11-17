@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Abstractions.DataAccess.EF" Version="1.0.0" />
+    <PackageReference Include="Abstractions.Domain" Version="1.0.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
   </ItemGroup>
@@ -15,15 +17,6 @@
     <ProjectReference Include="..\BetsService.DataAccess\BetsService.DataAccess.csproj" />
     <ProjectReference Include="..\BetsService.Domain\BetsService.Domain.csproj" />
     <ProjectReference Include="..\BetsService.Models\BetsService.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DataAccess.EF">
-      <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\DataAccess.EF.dll</HintPath>
-    </Reference>
-    <Reference Include="Domain">
-      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
