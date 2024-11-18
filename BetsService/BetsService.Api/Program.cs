@@ -13,6 +13,7 @@ var config = builder.Configuration;
 
 builder.Services
     .AddBetsServices()
+    .AddRedis(config)
     .AddServices(config);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

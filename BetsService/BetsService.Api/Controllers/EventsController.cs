@@ -3,6 +3,11 @@ using BetsService.Models;
 using BetsService.Services;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using BetsService.Api.Extensions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Text.Json;
+using System;
 
 namespace BetsService.Api.Controllers
 {
@@ -12,12 +17,15 @@ namespace BetsService.Api.Controllers
     {
         private readonly ILogger<EventsController> _logger;
         private readonly EventsService _service;
+        private readonly IDistributedCache _cache;
 
         public EventsController(ILogger<EventsController> logger
-            , EventsService service)
+            , EventsService service
+            , IDistributedCache cache)
         {
             _logger = logger;
             _service = service;
+            _cache = cache;
         }
 
         /// <summary>
@@ -54,7 +62,11 @@ namespace BetsService.Api.Controllers
         {
             try
             {
-                var result = await _service.GetEventAsync(id);
+                var cachKey = "Event." + id;
+                var result = await _cache.GetOrSetAsync(cachKey,
+                    async () => await _service.GetEventAsync(id),
+                    _logger);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -95,6 +107,10 @@ namespace BetsService.Api.Controllers
             try
             {
                 var result = await _service.UpdateEventAsync(request);
+
+                var cachKey = "Event." + request.Id;
+                await _cache.SetAsync(cachKey, result, _logger);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -116,6 +132,10 @@ namespace BetsService.Api.Controllers
             try
             {
                 var deletedCount = await _service.DeleteEventAsync(request);
+
+                var cachKey = "Event." + request.Id;
+                await _cache.RemoveAsync(cachKey);
+
                 return Ok(UpdateResponse.CreateSuccessResponse(deletedCount));
             }
             catch (Exception ex)
@@ -137,6 +157,18 @@ namespace BetsService.Api.Controllers
             try
             {
                 var deletedCount = await _service.DeleteListEventsAsync(request);
+
+                //с помощью IDistributedCache вы можете работать только с одним ключом за раз.
+                //Массовое удаление ключей и аналогичные сценарии выходят за рамки возможностей этого фасада.
+                //Если вам нужно работать с более сложными сценариями,
+                //вам следует подключаться к кэшу напрямую, используя соответствующий клиент.
+                //Например, для поддержки Redis вы можете использовать пакет StackExchange.Redis
+                foreach (var id in request.Ids)
+                {
+                    var cachKey = "Event." + id;
+                    await _cache.RemoveAsync(cachKey);
+                }
+
                 return Ok(UpdateResponse.CreateSuccessResponse(deletedCount));
             }
             catch (Exception ex)
