@@ -54,6 +54,7 @@ namespace BetsService.Api.Controllers
         {
             try
             {
+                //_logger.LogInformation($"Get bet '{id}'");
                 var result = await _service.GetBetsAsync(id);
                 return Ok(result);
             }

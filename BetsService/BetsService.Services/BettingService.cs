@@ -73,6 +73,7 @@ namespace BetsService.Services
         {
             try
             {
+                //throw new Exception("Test serilog!!!");
                 var response = await _repository.GetAllAsync();
 
                 return _mapper.Map<List<BetsResponse>>(response);
