@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotificationService.Services;
 using NotificationService.DataAccess;
+using Microsoft.AspNetCore.HttpLogging;
+using Serilog;
 
 namespace NotificationService.Api.Helpers
 {
@@ -31,6 +33,38 @@ namespace NotificationService.Api.Helpers
                 .AddScoped<DbContext, DatabaseContext>();
 
             return services;
+        }
+
+        public static WebApplicationBuilder AddLogger(this WebApplicationBuilder builder, IConfiguration configuration)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext()
+                .Enrich.WithProperty("app_name", "NotificationService")
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
+
+            builder.Services.AddHttpLogging(logging =>
+            {
+                logging.LoggingFields = HttpLoggingFields.Request | HttpLoggingFields.Response | HttpLoggingFields.RequestBody | HttpLoggingFields.ResponseBody;
+            });
+
+            return builder;
+        }
+
+        public static WebApplication AddHttpLogging<T>(this WebApplication app)
+        {
+            app.UseHttpLogging();
+
+            // Пример использования логирования
+            app.UseSerilogRequestLogging();
+
+            var log = app.Services.GetService<ILogger<T>>();
+            log?.LogDebug("debug");
+            log?.LogInformation("info");
+
+            return app;
         }
     }
 }

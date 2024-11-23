@@ -16,7 +16,11 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.AddLogger(config);
+
 var app = builder.Build();
+
+app.AddHttpLogging<Program>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
