@@ -231,7 +231,7 @@ namespace ApiGateway.ApiHost.Service
                         throw new ArgumentException("Запрос не найден или метод не поддерживается");
                 }
             }
-            else if (_endpointConfig.Type == "redis") 
+            else if (_endpointConfig.Type == "rabit") 
             {
                 throw new ArgumentException("метод не поддерживается");
             }
