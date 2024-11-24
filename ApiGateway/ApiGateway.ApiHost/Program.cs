@@ -65,9 +65,6 @@ namespace ApiGateway.ApiHost
 
             // Пример использования логирования
             app.UseSerilogRequestLogging();
-            var log = app.Services.GetService<ILogger<Program>>();
-            log?.LogDebug("debug");
-            log?.LogInformation("info");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
