@@ -27,3 +27,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 volumes:
   postgres_data:
+
+networks:
+  default:
+    name: "BestNetwoks"  

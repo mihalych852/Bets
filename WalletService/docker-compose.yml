@@ -23,3 +23,7 @@ services:
       - mongo_data:/var/lib/mongo/data
 volumes:
   mongo_data:
+
+networks:
+  default:
+    name: "BestNetwoks"  
