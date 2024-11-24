@@ -1,0 +1,13 @@
+services:
+  apigateway.apihost:
+    image: ${DOCKER_REGISTRY-}apigatewayapihost
+    build:
+      context: .
+      dockerfile: ApiGateway.ApiHost/Dockerfile
+    ports:
+     - "5055:8080"
+     #- "5035:8081" 
+
+networks:
+  default:
+    name: "BestNetwoks"  

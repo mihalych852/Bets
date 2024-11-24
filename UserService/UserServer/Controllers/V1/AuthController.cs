@@ -67,7 +67,7 @@ namespace UserServer.WebHost.Controllers.V1
         /// </summary>
         /// <param name="refreshToken"></param>
         /// <returns></returns>
-        [HttpPost("refresh-token")]
+        [HttpPost("refreshToken")]
         public async Task<ActionResult<AuthenticationResult>> RefreshToken(string refreshToken)
         {
             try
