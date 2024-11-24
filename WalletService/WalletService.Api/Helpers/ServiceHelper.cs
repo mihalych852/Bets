@@ -26,7 +26,7 @@ namespace WalletService.Api.Helpers
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .Enrich.FromLogContext()
-                .Enrich.WithProperty("app_name", "BetsServer")
+                .Enrich.WithProperty("app_name", "WalletService")
                 .CreateLogger();
 
             builder.Host.UseSerilog();
