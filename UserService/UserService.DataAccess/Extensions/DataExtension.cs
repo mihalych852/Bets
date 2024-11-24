@@ -33,7 +33,7 @@ namespace UserServer.DataAccess.Extensions
                 option.UseNpgsql(connectionDb));
 
             string? conntectionResdis = configuration.GetConnectionString("Redis");
-            if (String.IsNullOrEmpty(connectionDb)) { throw new NullReferenceException(nameof(connectionDb)); }
+            if (String.IsNullOrEmpty(conntectionResdis)) { throw new NullReferenceException(nameof(connectionDb)); }
             conntectionResdis = string.Format(conntectionResdis,
                 Environment.GetEnvironmentVariable("ASPNETCORE_REDISPORT"),
                 Environment.GetEnvironmentVariable("ASPNETCORE_REDIS_PASSWORD"));
