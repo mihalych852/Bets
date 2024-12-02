@@ -1,30 +1,45 @@
 ﻿using AutoMapper;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Bets.Abstractions.DataAccess.EF.Repositories;
 using WalletService.Domain;
 using WalletService.Models;
 using WalletService.DataAccess.Repositories;
 using WalletService.Service.Exeptions;
+using NotificationService.Models;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace WalletService.Service
 {
     public class WalletsService
     {
+        private readonly Guid _assemblyGuid;
+
         private readonly CreatedEntityRepository<Transactions> _tranRepository;
         private readonly WalletsRepository _walletRepository;
         private readonly ILogger<WalletsService> _logger;
         private readonly IMapper _mapper;
+        private readonly IBusControl _busControl;
 
         public WalletsService(CreatedEntityRepository<Transactions> tranRepository
             , WalletsRepository walletRepository
             , ILogger<WalletsService> logger
             , IMapper mapper
+            , IBusControl busControl
             )
         {
             _tranRepository = tranRepository;
             _logger = logger;
             _mapper = mapper;
             _walletRepository = walletRepository;
+            _busControl = busControl;
+
+            var ass = Assembly.GetExecutingAssembly().GetCustomAttribute<GuidAttribute>()?.Value;
+            if(!Guid.TryParse(ass, out _assemblyGuid))
+            {
+                _assemblyGuid = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            }
         }
 
         public async Task<Guid> CreditAsync(TransactionsRequest request
@@ -71,6 +86,15 @@ namespace WalletService.Service
                     wallet.ModifiedDate = DateTime.Now;
                     await _walletRepository.UpdateAsync(wallet.BettorId, wallet);
                 }
+
+                await _busControl.Publish(new IncomingMessageRequest
+                {
+                    CreatedBy = nameof(CreditAsync),
+                    TargetId = request.BettorId,
+                    SourceId = _assemblyGuid,
+                    Subject = "Зачисление средств",
+                    Message = $"{request.Description}. Зачислено {tran.Amount} единиц."
+                });
 
                 return tran.Id;
             }
@@ -127,6 +151,15 @@ namespace WalletService.Service
                 wallet.ModifiedBy = tran.Id;
                 wallet.ModifiedDate = DateTime.Now;
                 await _walletRepository.UpdateAsync(wallet.BettorId, wallet);
+
+                await _busControl.Publish(new IncomingMessageRequest
+                {
+                    CreatedBy = nameof(CreditAsync),
+                    TargetId = request.BettorId,
+                    SourceId = _assemblyGuid,
+                    Subject = "Списание средств",
+                    Message = $"{request.Description}. Списано {tran.Amount} единиц."
+                });
 
                 return tran.Id;
             }
