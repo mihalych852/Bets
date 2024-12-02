@@ -58,8 +58,8 @@ namespace UserServer.WebHost.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ResponceUserDto>> GetUserById(string id)
+        [HttpGet("getById")]
+        public async Task<ActionResult<ResponceUserDto>> GetUserById([FromQuery] string id)
         {
             var cachKey = DefaultPreficsCashe + "UserId." + id;
             var user = await _cache.GetOrSerAsync(cachKey,
@@ -79,8 +79,8 @@ namespace UserServer.WebHost.Controllers.V1
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        [HttpGet("userName/{userName}")]
-        public async Task<ActionResult<ResponceUserDto>> GetUsersByUserName(string userName)
+        [HttpGet("userName")]
+        public async Task<ActionResult<ResponceUserDto>> GetUsersByUserName([FromQuery] string userName)
         {
             var cachKey = DefaultPreficsCashe + "UserName." + userName;
             var user = await _cache.GetOrSerAsync(cachKey,
@@ -103,7 +103,7 @@ namespace UserServer.WebHost.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<ResponceUserDto>> RegisterUser(UserDto user, string password)
+        public async Task<ActionResult<ResponceUserDto>> RegisterUser([FromBody] UserDto user,[FromQuery] string password)
         {
             
             var result = await _userService.CreateUserAsync(user, password);
@@ -128,9 +128,9 @@ namespace UserServer.WebHost.Controllers.V1
         /// <param name="id"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut("userUpdate")]
         [Authorize(Roles = "Admin")] // Ограничиваем доступ только для администраторов
-        public async Task<IActionResult> UpdateUser(string id, UserDto user)
+        public async Task<IActionResult> UpdateUser([FromQuery] string id, [FromBody] UserDto user)
         {
             await _userService.UpdateUserAsync(user);
 
@@ -144,9 +144,9 @@ namespace UserServer.WebHost.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("deleteUser")]
         [Authorize(Roles = "Admin")] // Ограничиваем доступ только для администраторов
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser( [FromQuery] string id)
         {
             await _userService.DeleteUserAsync(id);
 
