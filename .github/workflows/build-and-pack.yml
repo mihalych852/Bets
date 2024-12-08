@@ -1,0 +1,52 @@
+name: Build and Pack Solutions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2. Setup .NET environment
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0
+
+    # 3. Create a local NuGet repository
+    - name: Prepare Local NuGet Folder
+      run: mkdir -p ./LocalNuget
+
+    # 4. Build and pack DLL libraries from Abstractions folder
+    # Собираем все .csproj в папках Abstractions
+    - name: Build and pack DLL libraries
+      run: |        
+        for csproj in $(find ./Abstractions -name "*.csproj"); do
+          echo "Packing $csproj"
+          dotnet pack $csproj -c Release --output ./LocalNuget
+        done
+
+    # 5. Add the local NuGet repository
+    - name: Configure NuGet for local repository
+      run: dotnet nuget add source ./LocalNuget --name LocalNuget
+     
+    
+    # 6. Restore and build services
+    # Перебираем все сервисы и выполняем restore и build
+    - name: Restore and build solutions
+      run: |        
+        for solution in ./ApiGateway/*.sln ./NotificationService/*.sln ./UserService/*.sln ./WalletService/*.sln ./BetsService/*.sln; do
+          echo "Restoring and building solution $solution"
+          dotnet restore $solution
+          dotnet build $solution -c Release
+        done
