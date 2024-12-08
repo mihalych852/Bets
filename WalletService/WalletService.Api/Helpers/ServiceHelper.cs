@@ -96,6 +96,7 @@ namespace WalletService.Api.Helpers
                 {
                     h.Username(rmqSettings.Login);
                     h.Password(rmqSettings.Password);
+                    //h.RequestedConnectionTimeout(TimeSpan.FromSeconds(10));
                 });
         }
     }

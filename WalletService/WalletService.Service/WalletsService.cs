@@ -87,15 +87,19 @@ namespace WalletService.Service
                     await _walletRepository.UpdateAsync(wallet.BettorId, wallet);
                 }
 
-                await _busControl.Publish(new IncomingMessageRequest
+                using (var source = new CancellationTokenSource(TimeSpan.FromSeconds(15))) // На случай, если за 15 сек. сообщение отправить не получилось (например, не коннектится к рабиту)
                 {
-                    CreatedBy = nameof(CreditAsync),
-                    TargetId = request.BettorId,
-                    SourceId = _assemblyGuid,
-                    Subject = "Зачисление средств",
-                    Message = $"{request.Description}. Зачислено {tran.Amount} единиц.",
-                    ActualDate = DateTime.UtcNow.AddDays(10),
-                });
+                    await _busControl.Publish(new IncomingMessageRequest
+                    {
+                        CreatedBy = nameof(CreditAsync),
+                        TargetId = request.BettorId,
+                        SourceId = _assemblyGuid,
+                        Subject = "Зачисление средств",
+                        Message = $"{request.Description}. Зачислено {tran.Amount} единиц.",
+                        ActualDate = DateTime.UtcNow.AddDays(10),
+                    }
+                    , source.Token);
+                }
 
                 return tran.Id;
             }
