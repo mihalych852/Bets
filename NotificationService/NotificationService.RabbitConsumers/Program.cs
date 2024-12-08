@@ -31,7 +31,7 @@ public class Program
                     .AddServices(configuration)
                     .AddMassTransit(x =>
                     {
-                        x.AddConsumer<IncomingMessageConsumer>(); 
+                        x.AddConsumer<IncomingMessageAddConsumer>(); 
                         x.UsingRabbitMq((context, cfg) =>
                         {
                             ConfigureRmq(cfg, configuration);
@@ -83,7 +83,7 @@ public class Program
     {
         configurator.ReceiveEndpoint($"masstransit_incomingmessage_queue", e =>
         {
-            e.Consumer<IncomingMessageConsumer>(context);
+            e.Consumer<IncomingMessageAddConsumer>(context);
             e.UseMessageRetry(r =>
             {
                 r.Incremental(3, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));

@@ -5,12 +5,12 @@ using NotificationService.Services;
 
 namespace NotificationService.RabbitConsumers.Consumers
 {
-    public class IncomingMessageConsumer : IConsumer<IncomingMessageRequest>
+    public class IncomingMessageAddConsumer : IConsumer<IncomingMessageRequest>
     {
-        private readonly ILogger<IncomingMessageConsumer> _logger;
+        private readonly ILogger<IncomingMessageAddConsumer> _logger;
         private readonly IncomingMessagesService _messagesService;
 
-        public IncomingMessageConsumer(ILogger<IncomingMessageConsumer> logger
+        public IncomingMessageAddConsumer(ILogger<IncomingMessageAddConsumer> logger
             , IncomingMessagesService messagesService)
         {
             _logger = logger;

@@ -33,7 +33,7 @@ namespace NotificationService.RabbitConsumers.Helpers
 
             services
                 .AddScoped<IncomingMessagesService>()
-                .AddScoped<IConsumer<IncomingMessageRequest>, IncomingMessageConsumer>()
+                .AddScoped<IConsumer<IncomingMessageRequest>, IncomingMessageAddConsumer>()
                 .AddScoped<DbContext, DatabaseContext>();
 
             return services;
