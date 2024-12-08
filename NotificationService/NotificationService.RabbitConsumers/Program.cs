@@ -2,13 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NotificationService.Models;
-using NotificationService.RabbitConsumers.ConsumerDefinitions;
 using NotificationService.RabbitConsumers.Consumers;
 using NotificationService.RabbitConsumers.Helpers;
 using NotificationService.RabbitConsumers.Settings;
-using NotificationService.Services;
 using NotificationService.Services.Helpers;
 
 
@@ -33,10 +29,9 @@ public class Program
                 services
                     .AddNotificationServices()
                     .AddServices(configuration)
-                    //.AddScoped<IConsumerDefinition<IncomingMessageConsumer>, IncomingMessageConsumerDefinition>()
                     .AddMassTransit(x =>
                     {
-                        x.AddConsumer<IncomingMessageConsumer, IncomingMessageConsumerDefinition>(); //.Endpoint(e => e.Name = "addIncomingMessage");
+                        x.AddConsumer<IncomingMessageConsumer>(); 
                         x.UsingRabbitMq((context, cfg) =>
                         {
                             ConfigureRmq(cfg, configuration);
@@ -80,7 +75,7 @@ public class Program
     /// <param name="configurator"></param>
     private static void RegisterEndPoints(IRabbitMqBusFactoryConfigurator configurator, IRegistrationContext context)
     {
-        configurator.ReceiveEndpoint($"masstransit_incomingmessage_queue_2", e =>
+        configurator.ReceiveEndpoint($"masstransit_incomingmessage_queue", e =>
         {
             e.Consumer<IncomingMessageConsumer>(context);
             e.UseMessageRetry(r =>
