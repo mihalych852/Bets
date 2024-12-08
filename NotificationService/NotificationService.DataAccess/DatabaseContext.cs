@@ -41,6 +41,7 @@ namespace NotificationService.DataAccess
                 .HasMaxLength(60);
             modelBuilder.Entity<IncomingMessages>().Property(b => b.Subject).IsRequired()
                 .HasMaxLength(100);
+            modelBuilder.Entity<IncomingMessages>().Property(b => b.ActualDate).IsRequired();
         }
 
         private void MessengersModelCreating(ModelBuilder modelBuilder)

@@ -43,5 +43,14 @@ namespace NotificationService.DataAccess.Repositories
                 .ExecuteUpdateAsync(u => u.SetProperty(p => p.State, request.State));
             return updatedCount;
         }
+
+        public override Task AddAsync(IncomingMessages entity)
+        {
+            if (entity.ActualDate == null)
+            {
+                entity.ActualDate = GetNow().AddDays(2);
+            }
+            return base.AddAsync(entity);
+        }
     }
 }
