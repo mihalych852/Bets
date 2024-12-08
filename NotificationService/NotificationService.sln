@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService.Api", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService.Tests", "NotificationService.Tests\NotificationService.Tests.csproj", "{9DD613F6-4DB8-4FBE-AD2D-B150655E2903}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService.Models", "NotificationService.Models\NotificationService.Models.csproj", "{63F7FC58-0BFE-41D8-AEDE-D2A44E3AAD86}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService.Domain", "NotificationService.Domain\NotificationService.Domain.csproj", "{9ED36F20-D97F-4C42-B9D8-5F0FC146F4A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService.DataAccess", "NotificationService.DataAccess\NotificationService.DataAccess.csproj", "{B5D9FCD3-5F22-4FFE-BF74-1136BF35BAB6}"
