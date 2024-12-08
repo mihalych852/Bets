@@ -32,8 +32,6 @@ namespace WalletService.Api.Helpers
                 });
             });
 
-            //services.AddMassTransitHostedService();
-
             return services;
         }
 
@@ -75,21 +73,21 @@ namespace WalletService.Api.Helpers
         /// <param name="configurator"> Конфигуратор RMQ. </param>
         private static void ConfigureRmq(IRabbitMqBusFactoryConfigurator configurator, IConfiguration configuration)
         {
-            var rmqSettings = configuration.Get<ApplicationSettings>().RmqSettings; 
+            //var rmqSettings = configuration.Get<ApplicationSettings>().RmqSettings; 
 
-            //ushort rabitPort;
-            //var strPort = Environment.GetEnvironmentVariable("ASPNETCORE_RABITPORT");
-            //if (!ushort.TryParse(strPort, out rabitPort))
-            //    throw new ArgumentException("Не удалось преобразовать порт в число");
+            ushort rabitPort;
+            var strPort = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PORT");
+            if (!ushort.TryParse(strPort, out rabitPort))
+                throw new ArgumentException("Не удалось преобразовать порт в число");
 
-            //var rmqSettings = new RmqSettings()
-            //{
-            //    Host = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_HOST") ?? "localhost",
-            //    Port = rabitPort,
-            //    VHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_VHOST") ?? "/",
-            //    Login = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_USER") ?? "",
-            //    Password = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PASSWORD") ?? ""
-            //};
+            var rmqSettings = new RmqSettings()
+            {
+                Host = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_HOST") ?? "localhost",
+                Port = rabitPort,
+                VHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_VHOST") ?? "/",
+                Login = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_USER") ?? "",
+                Password = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PASSWORD") ?? ""
+            };
 
             configurator.Host(rmqSettings.Host,
                 rmqSettings.Port,

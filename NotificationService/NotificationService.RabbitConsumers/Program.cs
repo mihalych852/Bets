@@ -49,15 +49,21 @@ public class Program
     /// <param name="configuration"> Конфигурация приложения. </param>
     private static void ConfigureRmq(IRabbitMqBusFactoryConfigurator configurator, IConfiguration configuration)
     {
-        var rmqSettings = configuration.Get<ApplicationSettings>().RmqSettings;
+        //var rmqSettings = configuration.Get<ApplicationSettings>().RmqSettings;
 
-        //var rmqSettings = new RmqSettings()
-        //{
-        //    Host = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_HOST") ?? "localhost",
-        //    VHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_VHOST") ?? "/",
-        //    Login = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_USER") ?? "",
-        //    Password = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PASSWORD") ?? ""
-        //};
+        ushort rabitPort;
+        var strPort = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PORT");
+        if (!ushort.TryParse(strPort, out rabitPort))
+            throw new ArgumentException("Не удалось преобразовать порт в число");
+
+        var rmqSettings = new RmqSettings()
+        {
+            Host = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_HOST") ?? "localhost",
+            VHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_VHOST") ?? "/",
+            Login = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_USER") ?? "",
+            Password = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PASSWORD") ?? "",
+            Port = rabitPort,
+        };
 
         configurator.Host(rmqSettings.Host, 
             rmqSettings.Port,
