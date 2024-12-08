@@ -26,7 +26,7 @@ jobs:
     # Создание packages
     - name: Create packages directory
       run: |
-            mkdir -p ./packages
+            mkdir -p ./LocalNuget
 
     # Шаг 3: Восстановление зависимостей для всех .csproj
     - name: Restore NuGet packages
