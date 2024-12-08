@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Abstractions.NotificationService.Models" Version="1.0.0" />
     <PackageReference Include="MassTransit" Version="8.3.2" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
@@ -16,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotificationService.Models\NotificationService.Models.csproj" />
     <ProjectReference Include="..\NotificationService.Services\NotificationService.Services.csproj" />
   </ItemGroup>
 

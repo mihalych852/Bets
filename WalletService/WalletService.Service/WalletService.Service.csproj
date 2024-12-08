@@ -9,10 +9,10 @@
   <ItemGroup>
     <PackageReference Include="Abstractions.DataAccess.EF" Version="1.0.0" />
     <PackageReference Include="Abstractions.Domain" Version="1.0.0" />
+    <PackageReference Include="Abstractions.NotificationService.Models" Version="1.0.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MassTransit" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
-    <PackageReference Include="NotificationService.Models" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
