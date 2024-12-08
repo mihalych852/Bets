@@ -20,11 +20,16 @@ namespace NotificationService.Services.Helpers
                 .AddScoped<LaterDeletedEntityRepository<Bettors>>()
                 .AddScoped<LaterDeletedEntityRepository<MessageSources>>()
                 .AddSingleton<BettorAddressRepository>()
-                .AddSingleton<IncomingMessagesRepository>()
+                .AddSingleton<IncomingMessagesRepository>(); 
 
+            return services;
+        }
+
+        public static IServiceCollection AddNotificationSendingServices(this IServiceCollection services)
+        {
+            services
                 .AddTransient<IMailService, MailService>()
-                
-                .AddHostedService<SendingHostedService>(); 
+                .AddHostedService<SendingHostedService>();
 
             return services;
         }

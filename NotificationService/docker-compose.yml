@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: NotificationService.Api/Dockerfile
     ports:
-      - "5045:8080"
+      - "5039:8080"
       - "7283:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -22,6 +22,11 @@ services:
       dockerfile: NotificationService.RabbitConsumers/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
+      - ASPNETCORE_DBPASSWORD=${ASPNETCORE_DBPASSWORD}
+      - ASPNETCORE_DBBASE=${ASPNETCORE_DBBASE}
+    depends_on:
+    - notificationDb 
   notificationDb:
     image: postgres:latest
     environment:

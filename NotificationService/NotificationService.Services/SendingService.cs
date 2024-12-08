@@ -49,6 +49,9 @@ namespace NotificationService.Services
         {
             try
             {
+                //var mToSend = await _repository.GetNextMessagesAsync(_processedCount);
+                //var messagesToSend = _mapper.Map<List<MessageForSending>>(mToSend);
+                
                 var messagesToSend = _mapper.Map<List<MessageForSending>>(await _repository.GetNextMessagesAsync(_processedCount));
                 if (messagesToSend == null || !messagesToSend.Any())
                 {

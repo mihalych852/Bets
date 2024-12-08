@@ -14,6 +14,7 @@ var config = builder.Configuration;
 
 builder.Services
     .AddNotificationServices()
+    .AddNotificationSendingServices()
     .AddMailServices(config)
     .AddServices(config);
 

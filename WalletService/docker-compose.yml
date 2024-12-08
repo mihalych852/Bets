@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: WalletService.Api/Dockerfile
     ports:
-      - "5187:8080"
+      - "5038:8080"
       - "7011:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

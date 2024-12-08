@@ -93,7 +93,8 @@ namespace WalletService.Service
                     TargetId = request.BettorId,
                     SourceId = _assemblyGuid,
                     Subject = "Зачисление средств",
-                    Message = $"{request.Description}. Зачислено {tran.Amount} единиц."
+                    Message = $"{request.Description}. Зачислено {tran.Amount} единиц.",
+                    ActualDate = DateTime.UtcNow.AddDays(10),
                 });
 
                 return tran.Id;

@@ -20,4 +20,10 @@
     <ProjectReference Include="..\NotificationService.Services\NotificationService.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

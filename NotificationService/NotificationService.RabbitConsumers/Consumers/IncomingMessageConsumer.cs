@@ -10,6 +10,8 @@ namespace NotificationService.RabbitConsumers.Consumers
         private readonly ILogger<IncomingMessageConsumer> _logger;
         private readonly IncomingMessagesService _messagesService;
 
+        //public IncomingMessageConsumer() { }
+
         public IncomingMessageConsumer(ILogger<IncomingMessageConsumer> logger
             , IncomingMessagesService messagesService)
         {

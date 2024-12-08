@@ -32,6 +32,8 @@ namespace WalletService.Api.Helpers
                 });
             });
 
+            //services.AddMassTransitHostedService();
+
             return services;
         }
 
