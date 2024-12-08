@@ -10,7 +10,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 
 		<!-- Параметры для NuGet-пакета -->
-		<PackageId>Abstractions.$(AssemblyName)</PackageId>
+		<PackageId>$(AssemblyName)</PackageId>
 		<!-- Уникальный идентификатор пакета -->
 		<VersionPrefix>1.0.0</VersionPrefix>
 		<!-- Установка версии пакета -->
