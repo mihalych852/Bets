@@ -23,6 +23,11 @@ jobs:
       with:
         dotnet-version: 8.0
 
+    # Создание packages
+    - name: Create packages directory
+      run: |
+            mkdir -p ./packages
+
     # Шаг 3: Восстановление зависимостей для всех .csproj
     - name: Restore NuGet packages
       run: |
@@ -31,10 +36,6 @@ jobs:
             echo "Restoring dependencies for $csproj"
             dotnet restore $csproj --configfile ./nuget.config
           done
-    # Создание packages
-    - name: Create packages directory
-      run: |
-            mkdir -p ./packages
 
     # Шаг 4: Сборка всех .csproj файлов
     - name: Build projects
