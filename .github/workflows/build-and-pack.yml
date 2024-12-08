@@ -34,7 +34,7 @@ jobs:
           # Найти все .csproj файлы в каталоге Abstractions
           for csproj in $(find ./Abstractions -name "*.csproj"); do
             echo "Restoring dependencies for $csproj"
-            dotnet restore $csproj --configfile ./nuget.config
+            dotnet restore $csproj --configfile ./nuget.config --source "nuget.org"
           done
 
     # Шаг 4: Сборка всех .csproj файлов
