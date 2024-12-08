@@ -28,10 +28,12 @@ jobs:
       run: mkdir -p ./LocalNuget
 
     # 4. Build and pack DLL libraries from Abstractions folder
-    # Собираем все .csproj в папках Abstractions
+    # Собираем все .csproj в папках Abstractions и пакуем их в NuGet
     - name: Build and pack DLL libraries
-      run: |        
+      run: |
         for csproj in $(find ./Abstractions -name "*.csproj"); do
+          echo "Building project $csproj"
+          dotnet build $csproj -c Release  # Сначала собираем проект
           echo "Packing $csproj"
           dotnet pack $csproj -c Release --output ./LocalNuget
         done
