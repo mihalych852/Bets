@@ -1,14 +1,16 @@
-import IndexBets from "./bets/IndexBets";
-import CreateEvent from "./events/CreateEvent";
-import IndexEvents from "./events/IndexEvents";
+import IndexBets from "./pages/IndexBets";
+import CreateEvent from "./pages/Events/CreateEvent";
+import EditEvents from "./pages/Events/EditEvent";
+import AdministativePanel from "./pages/Events/AdministativePanel";
 
 const routes = [
     //Events
     {path:'/events/create', element: <CreateEvent/>}, 
-    {path:'/events', element: <IndexEvents/>},
+    {path:'/events/:id', element: <EditEvents/>},
+    {path:'/events', element: <AdministativePanel/>},
     
     //Bets
-    {path:'/bets', element: <IndexEvents/>},
+    {path:'/bets', element: <IndexBets/>},
     
     //Login+Logout?
     

@@ -4,6 +4,9 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import routes from './route-config'
 import Header from './layout/Header';
 import Footer from './layout/Footer';
+import configureValidations from './Validations';
+
+configureValidations();
 
 function App() {
   return ( 

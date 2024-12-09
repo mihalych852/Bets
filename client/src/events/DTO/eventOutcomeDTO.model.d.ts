@@ -1,5 +1,9 @@
 export interface eventOutcomeDTO{
-    id: number;
+    id: string;
     description: string;
-    odds: number;
+    eventId: string;
+    createdBy: string;
+    betsClosed: boolean;
+    isHappened?: boolean;
+    currentOdd: number;
 }

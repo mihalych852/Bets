@@ -1,6 +1,8 @@
 export interface eventDTO {
-    id: number;
+    id: string;
     description: string;
     eventOutcomes?: eventOutcomeDTO[];
-    closingDate: Date;
+    betsEndTime: Date;
+    eventStartTime: Date;
+    //BetsEndTime
 }
