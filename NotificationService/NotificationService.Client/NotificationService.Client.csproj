@@ -10,7 +10,7 @@
     <PackageReference Include="Abstractions.Client" Version="1.0.0" />
     <PackageReference Include="Abstractions.Domain" Version="1.0.0" />
     <PackageReference Include="Abstractions.Model" Version="1.0.0" />
-    <PackageReference Include="Abstractions.NotificationService.Models" Version="1.0.0" />
+    <PackageReference Include="NotificationService.Models" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
