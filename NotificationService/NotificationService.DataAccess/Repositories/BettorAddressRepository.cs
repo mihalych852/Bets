@@ -1,11 +1,12 @@
 ﻿using Bets.Abstractions.DataAccess.EF.Repositories;
+using Bets.Abstractions.Domain.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NotificationService.Domain.Directories;
 
 namespace NotificationService.DataAccess.Repositories
 {
-    public class BettorAddressRepository : LaterDeletedEntityRepository<BettorAddresses>
+    public class BettorAddressRepository : LaterDeletedEntityRepository<BettorAddresses>, ICanCreateEntitiesRepository<BettorAddresses>
     {
         ///// <summary>
         ///// Конструктор
