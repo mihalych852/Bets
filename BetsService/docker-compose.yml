@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: BetsService.Api/Dockerfile
     ports:
-      - "5142:8080"
+      - "5039:8080"
       - "7127:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
