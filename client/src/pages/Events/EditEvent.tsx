@@ -25,7 +25,7 @@ export default function EditEvent(){
                 console.log(err)
             })
         }else{
-            navigate('events');
+            navigate('../events');
         }
 
     }, [])
@@ -35,6 +35,8 @@ export default function EditEvent(){
     <>
     <div className="mb-5">
         <h4>Редактировать событие</h4>
+        <input value={eventInfo.id} />
+        <input value={eventInfo.description} />
         <EventEditForm model= {eventInfo
         //     {modifyBy: "admin",
         //     description: eventInfo?.description ?? "", 
