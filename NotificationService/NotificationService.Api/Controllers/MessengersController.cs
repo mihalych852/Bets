@@ -8,7 +8,7 @@ using Bets.Abstractions.Model;
 namespace NotificationService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class MessengersController : ControllerBase
     {
         private readonly ILogger<MessengersController> _logger;

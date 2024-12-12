@@ -7,7 +7,7 @@ using NotificationService.Services;
 namespace NotificationService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class BettorAddressesController : ControllerBase
     {
         private readonly ILogger<BettorAddressesController> _logger;
@@ -46,7 +46,7 @@ namespace NotificationService.Api.Controllers
         /// <summary>
         /// Получение адреса по идентификатору
         /// </summary>
-        /// <param name="id">Идентификатор игрока</param>
+        /// <param name="id">Идентификатор адреса</param>
         /// <returns>BettorResponse</returns>
         [HttpGet]
         [Route("{id}")]
