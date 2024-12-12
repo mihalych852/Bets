@@ -2,8 +2,8 @@ services:
   betsService:
     image: ${DOCKER_REGISTRY-}betsservice
     build:
-      context: .
-      dockerfile: BetsService.Api/Dockerfile
+      context: ..
+      dockerfile: BetsService/BetsService.Api/Dockerfile
     ports:
       - "5039:8080"
       - "7127:8081"
@@ -15,7 +15,7 @@ services:
       - ASPNETCORE_REDIS_PASSWORD=${ASPNETCORE_REDIS_PASSWORD}
       - ASPNETCORE_REDISPORT=${ASPNETCORE_REDISPORT}
     depends_on:
-    - betsDb  
+      - betsDb
   betsDb:
     image: postgres:latest
     environment:
@@ -31,5 +31,4 @@ volumes:
 
 networks:
   default:
-    name: "BestNetwoks"  
-
+    name: "BestNetwoks"
