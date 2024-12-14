@@ -19,7 +19,7 @@ namespace NotificationService.Services.Helpers
                 .AddScoped<LaterDeletedEntityRepository<Messengers>>()
                 .AddScoped<LaterDeletedEntityRepository<Bettors>>()
                 .AddScoped<LaterDeletedEntityRepository<MessageSources>>()
-                .AddSingleton<BettorAddressRepository>()
+                .AddSingleton(typeof(IBettorAddressRepository), typeof(BettorAddressRepository))
                 .AddSingleton<IncomingMessagesRepository>(); 
 
             return services;

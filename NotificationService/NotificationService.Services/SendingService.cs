@@ -12,7 +12,7 @@ namespace NotificationService.Services
     public class SendingService
     {
         private readonly IncomingMessagesRepository _repository;
-        private readonly BettorAddressRepository _bettorAddressRepository;
+        private readonly IBettorAddressRepository _bettorAddressRepository;
         private readonly IMailService _mailService;
 
         private readonly ILogger<SendingService> _logger;
@@ -21,7 +21,7 @@ namespace NotificationService.Services
         private readonly int _processedCount;
 
         public SendingService(IncomingMessagesRepository incomingMessagesRepository
-            , BettorAddressRepository bettorAddressRepository
+            , IBettorAddressRepository bettorAddressRepository
             , IMapper mapper
             , ILogger<SendingService> logger
             , IMailService mailService

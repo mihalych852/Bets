@@ -6,7 +6,7 @@ using NotificationService.Domain.Directories;
 
 namespace NotificationService.DataAccess.Repositories
 {
-    public class BettorAddressRepository : LaterDeletedEntityRepository<BettorAddresses>, ICanCreateEntitiesRepository<BettorAddresses>
+    public class BettorAddressRepository : LaterDeletedEntityRepository<BettorAddresses>, IBettorAddressRepository
     {
         ///// <summary>
         ///// Конструктор

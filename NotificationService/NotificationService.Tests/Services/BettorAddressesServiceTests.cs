@@ -11,13 +11,13 @@ namespace NotificationService.Tests.Services
 {
     public class BettorAddressesServiceTests
     {
-        private readonly Mock<ICanCreateEntitiesRepository<BettorAddresses>> _bettorAddressRepositoryMock;
+        private readonly Mock<IBettorAddressRepository> _bettorAddressRepositoryMock;
         private readonly BettorAddressesService _bettorAddressesService;
 
         public BettorAddressesServiceTests()
         {
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
-            _bettorAddressRepositoryMock = fixture.Freeze<Mock<ICanCreateEntitiesRepository<BettorAddresses>>>();
+            _bettorAddressRepositoryMock = fixture.Freeze<Mock<IBettorAddressRepository>>();
             _bettorAddressesService = fixture.Build<BettorAddressesService>().OmitAutoProperties().Create();
         }
 
