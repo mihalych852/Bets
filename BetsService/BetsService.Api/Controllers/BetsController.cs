@@ -7,7 +7,7 @@ using BetsService.DataAccess.DTO;
 namespace BetsService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class BetsController : ControllerBase
     {
         private readonly ILogger<BetsController> _logger;
