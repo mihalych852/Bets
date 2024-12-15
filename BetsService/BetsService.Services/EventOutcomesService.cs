@@ -36,10 +36,11 @@ namespace BetsService.Services
 
             try
             {
-                var eventObj = _mapper.Map<EventOutcomes>(request);
-                await _repository.AddAsync(eventObj);
+                var outcomeObj = _mapper.Map<EventOutcomes>(request);
+                outcomeObj.CurrentOdd = CalcCoef();
+                await _repository.AddAsync(outcomeObj);
 
-                return eventObj.Id;
+                return outcomeObj.Id;
             }
             catch (Exception ex)
             {
@@ -161,6 +162,12 @@ namespace BetsService.Services
                 _logger.LogError(ex, $"[EventOutcomesService][DeleteListEventOutcomesAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
+        }
+
+        private static decimal CalcCoef()
+        {
+            var rand = new Random();
+            return (decimal)(rand.Next(1, 6) + Math.Round(rand.NextDouble(), 3));
         }
     }
 }
