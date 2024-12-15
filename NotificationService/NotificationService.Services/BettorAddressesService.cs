@@ -66,7 +66,7 @@ namespace NotificationService.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"[BettorAddressesService][GetBettorAddressesAsync] Exception: {ex.ToString()}");
-                throw new Exception(ex.ToString());
+                throw; // new Exception(ex.ToString());
             }
         }
 
