@@ -110,7 +110,7 @@ namespace UserServer.WebHost.Controllers.V1
             if (result.Succeeded)
             {
                 LogInformationByUser($"Создал нового юзера {user.Email}", user.Email);
-                var responseUserDto = await _userService.GetUserByUserName(user.Email);
+                var responseUserDto = await _userService.GetUserByUserName(user.UserName);
                 if (responseUserDto != null)
                 {
                     await _bus.Publish(responseUserDto);

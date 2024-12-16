@@ -32,9 +32,10 @@ namespace UserServer.DataAccess.Extensions
 
             var rabitUser = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_USER");
             var rabitPassword = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PASSWORD");
+            var rabitVHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_VHOST");
 
-            if (string.IsNullOrEmpty(rabitPassword) || string.IsNullOrEmpty(rabitUser))
-                throw new ArgumentNullException("Не найден логин или пароль");
+            if (string.IsNullOrEmpty(rabitPassword) || string.IsNullOrEmpty(rabitUser) || string.IsNullOrEmpty(rabitVHost))
+                throw new ArgumentNullException("Не найден логин, пароль или виртуальный хост rabiit");
 
             services.AddMassTransit(x =>
             {
@@ -42,7 +43,7 @@ namespace UserServer.DataAccess.Extensions
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(rabitConfig["HostName"], rabitPort, rabitConfig["VHost"], (h) =>
+                    cfg.Host(rabitConfig["HostName"], rabitPort, rabitVHost, (h) =>
                     {
                         h.Username(rabitUser); // Укажите имя пользователя
                         h.Password(rabitPassword); // Укажите пароль

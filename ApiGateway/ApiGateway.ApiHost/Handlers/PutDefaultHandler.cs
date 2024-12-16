@@ -12,7 +12,7 @@ namespace ApiGateway.ApiHost.Handlers
         {
             HttpResponseMessage response;
             var content = new StringContent(JsonSerializer.Serialize(request.Payload), Encoding.UTF8, "application/json");
-                response = await request.HttpClient.PutAsync(request.requstUrl, content);
+            response = await request.HttpClient.PutAsync(request.requstUrl, content);
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
