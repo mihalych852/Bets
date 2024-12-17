@@ -24,9 +24,9 @@ namespace UserServer.DataAccess.Extensions
             string? connectionDb = configuration.GetConnectionString("DefaultConnection");
             if (String.IsNullOrEmpty(connectionDb)) { throw new NullReferenceException(nameof(connectionDb)); }
             connectionDb = string.Format(connectionDb,
-                Environment.GetEnvironmentVariable("ASPNETCORE_DBBASE"),
-                Environment.GetEnvironmentVariable("ASPNETCORE_DBUSER"),
-                Environment.GetEnvironmentVariable("ASPNETCORE_DBPASSWORD"));
+                Environment.GetEnvironmentVariable("ASPNETCORE_DBBASE_USER_SERVICE"),
+                Environment.GetEnvironmentVariable("ASPNETCORE_DBUSER_USER_SERVICE"),
+                Environment.GetEnvironmentVariable("ASPNETCORE_DBPASSWORD_USER_SERVICE"));
 
 
             services.AddDbContext<ApplicationDbContext>(option =>
@@ -35,7 +35,7 @@ namespace UserServer.DataAccess.Extensions
             string? conntectionResdis = configuration.GetConnectionString("Redis");
             if (String.IsNullOrEmpty(conntectionResdis)) { throw new NullReferenceException(nameof(connectionDb)); }
             conntectionResdis = string.Format(conntectionResdis,
-                Environment.GetEnvironmentVariable("ASPNETCORE_REDISPORT"),
+                Environment.GetEnvironmentVariable("ASPNETCORE_REDIS_PORT"),
                 Environment.GetEnvironmentVariable("ASPNETCORE_REDIS_PASSWORD"));
 
             services.AddStackExchangeRedisCache(option =>
