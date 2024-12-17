@@ -17,6 +17,7 @@ return(
     {(formikProps) => (
         <Form>
         <TextField title="Описание события" field="description" />
+        <TextField title="Описание события" field="id" />
         <div className="row">
             <div className="mb-3 col-6">
                 <label htmlFor="eventStartTime">Дата начала события</label>

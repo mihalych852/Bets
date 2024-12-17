@@ -1,6 +1,7 @@
 import { eventDTO } from "../../events/DTO/eventDTO.model";
 import { eventOutcomeDTO } from "../../events/DTO/eventOutcomeDTO.model";
 import OutcomeLookup from "../OutcomeLookup";
+import css from './EventList.module.css';
 
 //Индивидуальная карточка события с описанием, датой закрытия и исходами
 export default function EventLookup(props: eventDTO){
@@ -10,7 +11,7 @@ export default function EventLookup(props: eventDTO){
       };const styleTable = {
         border: "1px solid lightgray",
         innerWidth: "50%"
-      }
+      };
     const date = new Date(props.betsEndTime);
 
     return(<>
@@ -19,6 +20,7 @@ export default function EventLookup(props: eventDTO){
             <p>Открыто до:{props.closingDate.getDay()}.{props.closingDate.getMonth()}.{props.closingDate.getFullYear()}</p>
             <table><tbody>{props.eventOutcomes?.map(o => <OutcomeLookup {...o} key={o.id}/>)}</tbody></table>
         </div> */}
+        
         <div className="col-6">
             <div className="card text-center" style={mystyle}>
                 <div className="card-body">

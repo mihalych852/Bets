@@ -3,8 +3,11 @@ import { eventDTO } from "../events/DTO/eventDTO.model";
 import EventList from "../sections/events/EventList";
 import axios, { Axios, AxiosResponse } from "axios";
 import { urlEvents } from "../endpoints";
+import { getCurrentUser } from "../services/auth.service";
 
 export default function IndexBets(){
+    const currentUser = getCurrentUser();
+    
     useEffect(() => {
         axios.get(urlEvents)
             .then((response: AxiosResponse<eventDTO[]>) => {
@@ -42,11 +45,11 @@ export default function IndexBets(){
                 description: "Кто-то там еще",
                 currentOdd: 4
             },{
-                id:"4",
+                id:"456456",
                 description: "Кто-то там еще",
                 currentOdd: 4
             },{
-                id:"4",
+                id:"786753",
                 description: "Кто-то там еще",
                 currentOdd: 4
             },

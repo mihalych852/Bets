@@ -5,14 +5,23 @@ import routes from './route-config'
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import configureValidations from './Validations';
+import axios from 'axios';
+import { getCurrentUser } from './services/auth.service';
 
 configureValidations();
 
 function App() {
+  //Подкладываем токен в каждый запрос
+  axios.interceptors.request.use(config => {
+    const user = getCurrentUser();
+    if(user)
+      config.headers["Authorization"] = `Bearer ${user.token}`;
+    return config;
+  });
   return ( 
     <>
-      <Header />
       <BrowserRouter>
+      <Header />
       <div className='container'>
       <Routes>
           {routes.map(({ path, element }) =>
@@ -27,3 +36,4 @@ function App() {
 }
 
 export default App;
+

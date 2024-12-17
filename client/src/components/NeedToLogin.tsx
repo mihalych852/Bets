@@ -4,7 +4,7 @@ export default function NeedToLogin(){
     return(
         <>
             <div>
-                <p>Для участия в ставках необходимо пройти войти в <Link className="" to="login">account</Link> или <Link className="" to="register">register</Link>.</p>
+                <p>Для участия в ставках необходимо пройти войти в <Link className="" to="../login">аккаунт</Link> или <Link className="" to="../register">зарегистрироваться</Link>.</p>
             </div>
         </>
     )

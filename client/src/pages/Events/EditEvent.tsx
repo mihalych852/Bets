@@ -34,6 +34,7 @@ export default function EditEvent(){
     return(
     <>
     <div className="mb-5">
+        <FF model={eventInfo}  />
         <h4>Редактировать событие</h4>
         <input value={eventInfo.id} />
         <input value={eventInfo.description} />
@@ -74,3 +75,15 @@ export default function EditEvent(){
 
     </>
 )}; 
+
+export function FF(props: ieventUpdateDTO){
+    return(
+        <>
+                    <input value={props.model.id} />
+
+        </>
+    )
+}
+interface ieventUpdateDTO{
+    model: eventUpdateDTO;
+}
