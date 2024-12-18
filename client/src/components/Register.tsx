@@ -79,7 +79,7 @@ const Register: React.FC = () => {
           <Form>
             {!successful && (
               <div>
-                <div className="form-group">
+                <div className="mb-3">
                   <label htmlFor="username"> Username </label>
                   <Field name="username" type="text" className="form-control" />
                   <ErrorMessage
@@ -89,7 +89,7 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="mb-3">
                   <label htmlFor="email"> Email </label>
                   <Field name="email" type="email" className="form-control" />
                   <ErrorMessage
@@ -99,7 +99,7 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="mb-3">
                   <label htmlFor="password"> Password </label>
                   <Field
                     name="password"

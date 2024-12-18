@@ -8,6 +8,8 @@ export const urlEventsCreate = `${baseURL}/api/events/create`;
 export const urlEventsEdit = `${baseURL}/api/events/update`;
 export const urlEventsGetById = `${baseURL}/api/events/`;
 
+export const urlOutComeCreate = `${baseURL}/api/eventOutcomes/create`;
+
 export const urlBetCreate = `${baseURL}/Bets/create`;
 
 
