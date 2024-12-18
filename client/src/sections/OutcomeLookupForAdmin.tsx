@@ -6,7 +6,7 @@ export default function OutcomeLookupForAdmin(props: eventOutcomeDTO){
     //кнопку сделать сабмитной и вызывать контроллер createBet?
     //еще нужно пересчитывать коэф и перерерисовывать элемент, т.к. он меняется 
     return(
-    <li>{props.description} Odds:{props.currentOdd}
+    <li>{props.description} | Odds:{props.currentOdd}
 
 </li>
 

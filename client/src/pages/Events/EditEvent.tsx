@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { urlEventsCreate, urlEventsEdit, urlEventsGetById } from "../../endpoints";
 import { eventUpdateDTO } from "../../events/DTO/eventUpdateDTO.model";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+import OutcomeForm from "../../sections/events/OutcomeForm";
+import { createOutcome } from "../../services/event.service";
+import { eventOutcomeRequestDTO } from "../../events/DTO/eventOutcomeRequestDTO.model";
+import { eventDTO } from "../../events/DTO/eventDTO.model";
+import { eventOutcomeDTO } from "../../events/DTO/eventOutcomeDTO.model";
 
 export default function EditEvent(){
     const {id} : any = useParams();
@@ -15,20 +23,41 @@ export default function EditEvent(){
         description: "0", id: "0", betsEndTime: new Date(), 
         eventStartTime: new Date(), status: 0, modifyBy:"aaa"  });
 
+    const [outComes, setData] = useState<eventOutcomeDTO[]>([]);
+
     useEffect(() => {
-        if(id){
-            axios.get(urlEventsGetById+id)
+        async function getData() {
+            if(id){
+            await axios.get(urlEventsGetById+id)
             .then((response: AxiosResponse<eventUpdateDTO>) => {
                 console.log(response.data);
                 setEventInfo(response.data);
+                //setData(response.data.) get outcomes
             }).catch(err => {
                 console.log(err)
-            })
-        }else{
-            navigate('../events');
-        }
+            });
+        };
+        getData();    }    
 
     }, [])
+
+    const handleSave = (formValue: eventOutcomeRequestDTO) => {
+        const { description, eventId } = formValue;
+        createOutcome(description, eventId).then(
+          () => {
+            window.location.reload();
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+          }
+        );
+      };
+  
     //Надо из параметров все поля заполнить по умолчанию как были
     //b314e08e-5e6c-4215-b8df-506e884960f7
     return(
@@ -36,8 +65,8 @@ export default function EditEvent(){
     <div className="mb-5">
         <FF model={eventInfo}  />
         <h4>Редактировать событие</h4>
-        <input value={eventInfo.id} />
-        <input value={eventInfo.description} />
+        <input className="form-control" value={eventInfo.id} />
+        <input className="form-control"  value={eventInfo.description} />
         <EventEditForm model= {eventInfo
         //     {modifyBy: "admin",
         //     description: eventInfo?.description ?? "", 
@@ -67,8 +96,12 @@ export default function EditEvent(){
 
     </div>
     <div>
-        <h5>Редактировать исходы</h5>
-        <p>тут должно быть добавление/удаление исходов, ноя пока не умею подгружать актуальные данные</p>
+        <h5>Outcome List</h5>
+        <div className="row">
+            <OutcomeForm model={{description: '', createdBy: userLogin, eventId: eventInfo.id}} onSubmit={handleSave}/>
+        </div>
+                    <div className="mb-3">
+            </div>
 
     </div>
 

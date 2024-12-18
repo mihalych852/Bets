@@ -1,7 +1,7 @@
 export interface eventUpdateDTO {
     id: string;
     description: string;
-    //eventOutcomes?: eventOutcomeDTO[];
+    eventOutcomes?: eventOutcomeDTO[];
     eventStartTime: Date;
     betsEndTime: Date;
     modifyBy?: string;
