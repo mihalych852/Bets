@@ -20,7 +20,7 @@ namespace UserServer.DataAccess.Extensions
         {
             var rabitConfig = configuration.GetSection("Rabit");
 
-            var rabitPortStr = Environment.GetEnvironmentVariable("ASPNETCORE_RABITPROT");
+            var rabitPortStr = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PORT");
             if (string.IsNullOrEmpty(rabitPortStr)) 
             {
                 throw new ArgumentNullException(nameof(rabitPortStr), "Не найдена конфигурация RabbitMQ");
