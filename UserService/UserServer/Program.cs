@@ -14,7 +14,14 @@ namespace UserServer
             builder.Services.AddServices(configuration);
 
             builder.AddLogger(configuration);
-
+            builder.Services.AddCors(options =>
+            {
+                var frontendUrl = builder.Configuration.GetValue<string>("frontend-url");
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins(frontendUrl).AllowAnyHeader().AllowAnyMethod();
+                });
+            });
             var app = builder.Build();
 
             app.AddHttpLogging<Program>();
@@ -49,6 +56,7 @@ namespace UserServer
 
             // Настройка конечных точек
             app.MapControllers();
+            app.UseCors();
 
             await app.RunAsync();
         }

@@ -13,9 +13,9 @@ configureValidations();
 function App() {
   //Подкладываем токен в каждый запрос
   axios.interceptors.request.use(config => {
-    const user = getCurrentUser();
-    if(user)
-      config.headers["Authorization"] = `Bearer ${user.token}`;
+    const token = localStorage.getItem("jwt");  
+    if(token)
+      config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   });
   return ( 

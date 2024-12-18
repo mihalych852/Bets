@@ -36,10 +36,11 @@ namespace BetsService.Services
 
             try
             {
-                var eventObj = _mapper.Map<EventOutcomes>(request);
-                await _repository.AddAsync(eventObj);
+                var outcomeObj = _mapper.Map<EventOutcomes>(request);
+                outcomeObj.CurrentOdd = CalcCoef();
+                await _repository.AddAsync(outcomeObj);
 
-                return eventObj.Id;
+                return outcomeObj.Id;
             }
             catch (Exception ex)
             {
@@ -47,7 +48,11 @@ namespace BetsService.Services
                 throw new Exception(ex.ToString());
             }
         }
-
+        private static decimal CalcCoef()
+        {
+            var rand = new Random();
+            return (decimal)(rand.Next(1, 6) + Math.Round(rand.NextDouble(), 3));
+        }
         public async Task<EventOutcomeResponse> GetEventOutcomeAsync(Guid id)
         {
             try

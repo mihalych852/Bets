@@ -63,10 +63,27 @@ namespace BetsService.Api.Controllers
             try
             {
                 var cachKey = "Event." + id;
-                var result = await _cache.GetOrSetAsync(cachKey,
-                    async () => await _service.GetEventAsync(id),
-                    _logger);
-
+                //var result = await _cache.GetOrSetAsync(cachKey,
+                //    async () => await _service.GetEventAsync(id),
+                //    _logger);
+                var result =
+                    new EventResponse
+                    {
+                        Id = new Guid("b314e08e-5e6c-4215-b8df-506e884960f7"),
+                        Description = "test1",
+                        EventStartTime = DateTime.Now,
+                        BetsEndTime = DateTime.Now.AddDays(2),
+                        EventOutcomes = new List<EventOutcomeResponse>() {
+                            new EventOutcomeResponse() {
+                                Id = new Guid(),
+                                EventId = new Guid("b314e08e-5e6c-4215-b8df-506e884960f7"),
+                                Description = "Out 1", BetsClosed = false, CurrentOdd = 2},
+                            new EventOutcomeResponse() {
+                                    Id = new Guid(),
+                                    EventId = new Guid("b314e08e-5e6c-4215-b8df-506e884960f7"),
+                                    Description = "Out 2", BetsClosed = false, CurrentOdd = 2}
+                            }
+                    };
                 return Ok(result);
             }
             catch (Exception ex)
@@ -86,6 +103,42 @@ namespace BetsService.Api.Controllers
             try
             {
                 var result = await _service.GetListEventsAsync();
+                result = new List<EventResponse>() {
+                    new EventResponse {
+                        Id = new Guid("b314e08e-5e6c-4215-b8df-506e884960f7"),
+                        Description = "test1",
+                        EventStartTime = DateTime.Now,
+                        BetsEndTime = DateTime.Now.AddDays(2),
+                        Status = 0,
+                        EventOutcomes = new List<EventOutcomeResponse>() {
+                            new EventOutcomeResponse() {
+                                Id = new Guid(),
+                                EventId = new Guid("b314e08e-5e6c-4215-b8df-506e884960f7"),
+                                Description = "Out 1", BetsClosed = false, CurrentOdd = 2},
+                            new EventOutcomeResponse() {
+                                    Id = new Guid(),
+                                    EventId = new Guid("b314e08e-5e6c-4215-b8df-506e884960f7"),
+                                    Description = "Out 1", BetsClosed = false, CurrentOdd = 2 }
+                        }
+                    },
+                        new EventResponse {
+                        Id = new Guid("b314e08e-5e6c-4215-b8df-506e884960f0"),
+                        Description = "test12",
+                        EventStartTime = DateTime.Now,
+                        BetsEndTime = DateTime.Now.AddDays(2),
+                        Status = 0,
+                        EventOutcomes = new List<EventOutcomeResponse>() {
+                            new EventOutcomeResponse() {
+                                Id = new Guid(),
+                                EventId = new Guid("b314e08e-5e6c-4215-b8df-506e884960f0"),
+                                Description = "Out 1", BetsClosed = false, CurrentOdd = 2},
+                            new EventOutcomeResponse() {
+                                    Id = new Guid(),
+                                    EventId = new Guid("b314e08e-5e6c-4215-b8df-506e884960f0"),
+                                    Description = "Out 1", BetsClosed = false, CurrentOdd = 2 }
+                        }
+                        }
+                };
                 return Ok(result);
             }
             catch (Exception ex)

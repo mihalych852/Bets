@@ -57,8 +57,9 @@ export function UserKnown(){
   const currentUser = getCurrentUser();
     return(
         <>
-            <Link className="" to="profile">UserName</Link><span>  | 
-                </span> <Link className="" to=""><span onClick={() => logout().then(() => {window.location.reload();})}>LogOut</span> </Link>   
+            <Link className="" to="profile">{currentUser.email}</Link><span>  | 
+            {/* </span> <Link className="" to=""><span onClick={() => logout().then(() => {window.location.reload();})}>LogOut</span> </Link>                    */}
+            </span> <Link className="" to=""><span onClick={() => logout()}>LogOut</span> </Link>   
         </>
     )
 }

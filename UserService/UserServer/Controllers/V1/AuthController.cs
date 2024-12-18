@@ -99,6 +99,17 @@ namespace UserServer.WebHost.Controllers.V1
 
             return Ok(roles);
         }
-
+        [HttpGet("GetUserInfo")]
+        [Authorize]
+        public IActionResult GetUserInfo()
+        {
+            return Ok(new UserClaimsDto
+            {
+                Email = User.FindFirstValue(ClaimTypes.Email),
+                Id = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                UserName = User.FindFirstValue(ClaimTypes.Name),
+                Rolles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).AsEnumerable()
+            });
+        }
     }
 }

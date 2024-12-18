@@ -1,8 +1,8 @@
-export interface eventDTO {
+export interface eventFullDTO {
     id: string;
     description: string;
     eventOutcomes?: eventOutcomeDTO[];
     betsEndTime: Date;
     eventStartTime: Date;
-    //BetsEndTime
+    status: eventsStatus;
 }

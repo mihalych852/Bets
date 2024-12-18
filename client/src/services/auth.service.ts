@@ -24,10 +24,21 @@ export const login = (email: string, password: string) => {
     })
     .then((response) => {
       if (response.data.token) {
-        localStorage.setItem("jwt", response.data.accessToken);
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("jwt", response.data.token);
+        localStorage.setItem("token", JSON.stringify(response.data));
+        getUserInfo();
       }
 
+      return response.data;
+    })
+    .catch((error) => console.error(error));
+};
+
+const getUserInfo = () => {
+  return axios
+    .get(API_URL + "GetUserInfo")
+    .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
     })
     .catch((error) => console.error(error));
@@ -41,6 +52,8 @@ export const logout = async () => {
     })
     .then(() => {
         localStorage.removeItem("user");
+        localStorage.removeItem("jwt");
+        //window.location.reload();
     })
     .catch((error) => console.error(error));
   } catch(error){
@@ -50,13 +63,16 @@ export const logout = async () => {
 
 export const getCurrentUser = () => {
   const userStr = localStorage.getItem("user");
-  if (userStr) return JSON.parse(userStr);
+  if (userStr){
+
+    return JSON.parse(userStr);
+  } 
 
   return null;
 };
 
 export const isUserLoggedIn = () => {
-  const userStr = localStorage.getItem("user");  
+  const userStr = localStorage.getItem("token");  
   if (userStr) 
     return true;
   else

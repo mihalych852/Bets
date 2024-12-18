@@ -1,16 +1,25 @@
 import { eventDTO } from "../../events/DTO/eventDTO.model";
 import { eventOutcomeDTO } from "../../events/DTO/eventOutcomeDTO.model";
 import OutcomeLookup from "../OutcomeLookup";
-import css from './EventList.module.css';
 
 //Индивидуальная карточка события с описанием, датой закрытия и исходами
 export default function EventLookup(props: eventDTO){
     //сделать через bootstrap/mui красиво потом
     const mystyle = {
         margin: "1rem",
+        padding: "0px"
       };const styleTable = {
         border: "1px solid lightgray",
         innerWidth: "50%"
+      };
+      const styleHeader = {
+        //backgroundColor: "#dce0f6",
+        backgroundColor: "#3e4a8b",
+        color: "fff"
+      };
+      const styleTitle = {
+        //backgroundColor: "#dce0f6",
+        color: "fff"
       };
     const date = new Date(props.betsEndTime);
 

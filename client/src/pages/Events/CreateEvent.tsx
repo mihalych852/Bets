@@ -4,14 +4,14 @@ import { urlEvents, urlEventsCreate } from "../../endpoints";
 import {Link, useNavigate} from "react-router-dom";
 import { eventCreationDTO } from "../../events/DTO/eventCreationDTO.model";
 import EventForm from "../../sections/events/EventForm";
+import { getCurrentUser } from "../../services/auth.service";
 
 
 export default function CreateEvent(){
     const navigate = useNavigate();
-
-    //let userDetails = JSON.parse(localStorage.getItem('user'));
+  const currentUser = getCurrentUser();
     //Тут нужноо брать логин пользователя и пихать его в createBy
-    const userLogin = "admin";
+    const userLogin = currentUser.userName ?? "admin";
     return(
     <>
         <h3>Создать новое событие</h3>
