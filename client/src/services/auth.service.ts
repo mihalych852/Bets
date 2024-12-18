@@ -24,8 +24,8 @@ export const login = (email: string, password: string) => {
     })
     .then((response) => {
       if (response.data.token) {
-        localStorage.setItem("jwt", response.data.token);
-        localStorage.setItem("token", JSON.stringify(response.data));
+        localStorage.setItem("token", response.data.token);
+        //localStorage.setItem("token", JSON.stringify(response.data));
         getUserInfo();
       }
 
@@ -39,6 +39,8 @@ const getUserInfo = () => {
     .get(API_URL + "GetUserInfo")
     .then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data));
+        console.log(response.data);
+        window.location.reload();
       return response.data;
     })
     .catch((error) => console.error(error));
@@ -46,14 +48,16 @@ const getUserInfo = () => {
 
 export const logout = async () => {
   try{
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("token");
       const res = await axios({
       url: API_URL + "logout",
       method: "POST",
     })
     .then(() => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("jwt");
-        //window.location.reload();
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      window.location.reload();
     })
     .catch((error) => console.error(error));
   } catch(error){

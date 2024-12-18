@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { urlBetCreate, urlEventsCreate, urlEventsEdit, urlEventsGetById } from "../endpoints";
+import { getCurrentUser } from "../services/auth.service";
 
 //Строчка с исходом, на который можно поставить
 export default function OutcomeLookup(props: eventOutcomeDTO){
@@ -12,7 +13,8 @@ export default function OutcomeLookup(props: eventOutcomeDTO){
     const styleTable = {
         border: "1px solid lightgray"
       }
-    const userLogin = "user";
+  const currentUser = getCurrentUser();
+    const userLogin = currentUser.userName ?? currentUser.email;
     const bettorId = "b314e08e-5e6c-4215-b8df-506e884960f4";
     
     //еще нужно пересчитывать коэф и перерерисовывать элемент, т.к. он меняется 
@@ -31,11 +33,13 @@ export default function OutcomeLookup(props: eventOutcomeDTO){
                   data: value
                 })
                   .then(function (res) {
-                     console.log(res)
-                  })
-                  .catch(function (res) {
-                     console.log(res)
-                });
+                     console.log(res);
+                     
+                    })
+                    .catch(function (res) {
+                      console.log(res)
+                    });
+                    window.location.reload();
                 navigate('../');
               } 
             }

@@ -20,7 +20,7 @@ return(
         <Form>
         <div className="row">
             <div className="mb-3 col-10">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">Описание</label>
                 <Field name="description" type="textarea" className="form-control" />
             </div>
             <div className="mb-1 mt-4 col-2">

@@ -19,14 +19,14 @@ return(
         <TextField title="Описание события" field="description" />
         <TextField title="Описание события" field="id" />
         <div className="row">
-            <div className="mb-3 col-6">
+            {/* <div className="mb-3 col-6">
                 <label htmlFor="eventStartTime">Дата начала события</label>
                 <Field name="eventStartTime" type="date" className="form-control" />
             </div>
             <div className="mb-3 col-6">
                 <label htmlFor="betsEndTime">Дата завершения события</label>
                 <Field name="betsEndTime" type="date" className="form-control" />
-            </div>
+            </div> */}
         </div>
         <div className="mb-3">
 

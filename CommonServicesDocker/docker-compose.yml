@@ -3,7 +3,7 @@ services:
     image: redis
     restart: always
     ports:
-      - '6379:${ASPNETCORE_REDISPORT}'
+      - '6379:${ASPNETCORE_REDIS_PORT}'
     volumes:
      - redis_data:/data
     environment:
@@ -40,8 +40,8 @@ services:
       RABBITMQ_DEFAULT_PASS: ${ASPNETCORE_RABIT_PASSWORD}
       RABBITMQ_DEFAULT_VHOST: ${ASPNETCORE_RABIT_VHOST}
     ports:
-      - '5672:${ASPNETCORE_RABITPORT}'
-      - '15672:${ASPNETCORE_WEBRABITPORT}'
+      - '5672:${ASPNETCORE_RABIT_PORT}'
+      - '15672:${ASPNETCORE_WEB_RABIT_PORT}'
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 

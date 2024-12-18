@@ -7,11 +7,15 @@ import { getCurrentUser } from "../services/auth.service";
 
 export default function IndexBets(){
     const currentUser = getCurrentUser();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [data, setData] = useState<eventDTO[]>([])
     
     useEffect(() => {
         axios.get(urlEvents)
             .then((response: AxiosResponse<eventDTO[]>) => {
                 console.log(response.data);
+                setData(response.data);
+                
             })
     }, [])
     const testList: eventDTO[] = [
@@ -74,6 +78,6 @@ export default function IndexBets(){
     ]
     return(
     <>
-        <EventList events={testList}/>
+        <EventList events={data}/>
     </>
 )};

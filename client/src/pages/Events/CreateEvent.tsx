@@ -10,7 +10,6 @@ import { getCurrentUser } from "../../services/auth.service";
 export default function CreateEvent(){
     const navigate = useNavigate();
   const currentUser = getCurrentUser();
-    //Тут нужноо брать логин пользователя и пихать его в createBy
     const userLogin = currentUser.userName ?? "admin";
     return(
     <>

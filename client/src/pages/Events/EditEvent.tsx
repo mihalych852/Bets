@@ -12,6 +12,9 @@ import { createOutcome } from "../../services/event.service";
 import { eventOutcomeRequestDTO } from "../../events/DTO/eventOutcomeRequestDTO.model";
 import { eventDTO } from "../../events/DTO/eventDTO.model";
 import { eventOutcomeDTO } from "../../events/DTO/eventOutcomeDTO.model";
+import OutcomeLookup from "../../sections/OutcomeLookup";
+import OutcomeLookupForList from "../../sections/events/OutcomeLookupForList";
+import { Table } from "react-bootstrap";
 
 export default function EditEvent(){
     const {id} : any = useParams();
@@ -26,9 +29,8 @@ export default function EditEvent(){
     const [outComes, setData] = useState<eventOutcomeDTO[]>([]);
 
     useEffect(() => {
-        async function getData() {
             if(id){
-            await axios.get(urlEventsGetById+id)
+            axios.get(urlEventsGetById+id)
             .then((response: AxiosResponse<eventUpdateDTO>) => {
                 console.log(response.data);
                 setEventInfo(response.data);
@@ -36,8 +38,7 @@ export default function EditEvent(){
             }).catch(err => {
                 console.log(err)
             });
-        };
-        getData();    }    
+        }; 
 
     }, [])
 
@@ -96,12 +97,22 @@ export default function EditEvent(){
 
     </div>
     <div>
-        <h5>Outcome List</h5>
+        <h5>Список исходов</h5>
         <div className="row">
             <OutcomeForm model={{description: '', createdBy: userLogin, eventId: eventInfo.id}} onSubmit={handleSave}/>
         </div>
-                    <div className="mb-3">
-            </div>
+        <div className="mb-3">
+          <Table striped className="w-100">
+            <thead>
+              <tr><th>Описание</th><th>Коэф.</th><th>Статус</th></tr>
+            </thead>
+            <tbody>
+              {eventInfo.eventOutcomes?.map(events => <OutcomeLookupForList {...events} key={events.id}/>)}
+
+            </tbody>
+          </Table>
+          
+        </div>
 
     </div>
 
