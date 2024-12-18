@@ -1,4 +1,3 @@
-
 services:
   walletservice:
     image: ${DOCKER_REGISTRY-}walletservice
@@ -11,13 +10,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_DBBASE=db_wallet
-      - ASPNETCORE_RABIT_PORT=${ASPNETCORE_RABIT_PORT} 
+      - ASPNETCORE_RABIT_PORT=${ASPNETCORE_RABIT_PORT}
       - ASPNETCORE_RABIT_USER=${ASPNETCORE_RABIT_USER}
       - ASPNETCORE_RABIT_PASSWORD=${ASPNETCORE_RABIT_PASSWORD}
-      - ASPNETCORE_RABIT_VHOST=${ASPNETCORE_RABIT_VHOST} 
+      - ASPNETCORE_RABIT_VHOST=${ASPNETCORE_RABIT_VHOST}
       - ASPNETCORE_RABIT_HOST=${ASPNETCORE_RABIT_HOST}
     depends_on:
-    - mongoDbWallet  
+      - mongoDbWallet
   mongoDbWallet:
     image: mongo:latest
     environment:
@@ -31,4 +30,4 @@ volumes:
 
 networks:
   default:
-    name: "BestNetwoks"  
+    name: "BestNetwoks"
