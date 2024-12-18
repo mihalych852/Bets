@@ -76,7 +76,7 @@ export const getCurrentUser = () => {
 };
 
 export const isUserLoggedIn = () => {
-  const userStr = localStorage.getItem("token");  
+  const userStr = localStorage.getItem("user");  
   if (userStr) 
     return true;
   else
