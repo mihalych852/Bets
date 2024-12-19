@@ -10,12 +10,12 @@ namespace NotificationService.DataAccess.Helpers
         private readonly IConfiguration _configuration;
         private readonly DbContext _context;
 
-        const string defaultCreatedBy = "DbSeedHelper";
+        const string defaultBy = "DbSeedHelper";
 
         private readonly static Guid defaultMessengerId = Guid.Parse("2cd5dd28-3234-460f-a314-64e024e7f911");
         private readonly static string defaultMessengerName = "email";
 
-        public static Guid MailMessengerId { get; private set; }
+        //public static Guid MailMessengerId { get; private set; }
 
         public DbSeedHelper(IConfiguration configuration, DbContext context)
         {
@@ -31,31 +31,34 @@ namespace NotificationService.DataAccess.Helpers
 
             if (defaultMessenger != null)
             {
-                MailMessengerId = defaultMessengerId;
+                //MailMessengerId = defaultMessengerId;
                 return;
             }
-            else
+
+            var repo = new LaterDeletedEntityRepository<Messengers>(_context, _configuration);
+
+            var mailMessenger = dbSet.Where(x => x.Name == defaultMessengerName && x.DeletedDate == null).FirstOrDefault();
+            if (mailMessenger != null)
             {
-                defaultMessenger = dbSet.Where(x => x.Name == defaultMessengerName && x.DeletedDate == null).FirstOrDefault();
-                if (defaultMessenger != null)
-                {
-                    MailMessengerId = defaultMessenger.Id;
-                    return;
-                }
-                else
-                {
-                    var repo = new LaterDeletedEntityRepository<Messengers>(_context, _configuration);
-
-                    defaultMessenger = new Messengers()
+                _ = await repo.DeleteAsync(
+                    new Bets.Abstractions.Domain.Repositories.ModelRequests.DeleteRequest()
                     {
-                        Id = defaultMessengerId,
-                        Name = defaultMessengerName,
-                        CreatedBy = defaultCreatedBy
-                    };
+                        Id = mailMessenger.Id,
+                        DeletedBy = defaultBy
+                    });
 
-                    await repo.AddAsync(defaultMessenger);
-                }
+                //MailMessengerId = mailMessenger.Id;
+                //return;
             }
+
+            defaultMessenger = new Messengers()
+            {
+                Id = defaultMessengerId,
+                Name = defaultMessengerName,
+                CreatedBy = defaultBy
+            };
+
+            await repo.AddAsync(defaultMessenger);
         }
     }
 }

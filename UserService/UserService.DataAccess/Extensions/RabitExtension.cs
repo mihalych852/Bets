@@ -39,7 +39,7 @@ namespace UserServer.DataAccess.Extensions
 
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<UserCreatedConsumer>();
+                //x.AddConsumer<UserCreatedConsumer>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
@@ -56,16 +56,16 @@ namespace UserServer.DataAccess.Extensions
         }
     }
 
-    /// <summary>
-    /// для примера работы с паблишем юзеров оставил очень временно
-    /// </summary>
-    public class UserCreatedConsumer : IConsumer<ResponceUserDto>
-    {
-        public Task Consume(ConsumeContext<ResponceUserDto> context)
-        {
-            var message = context.Message;
-            Console.WriteLine(message);
-            return Task.CompletedTask;
-        }
-    }
+    ///// <summary>
+    ///// для примера работы с паблишем юзеров оставил очень временно
+    ///// </summary>
+    //public class UserCreatedConsumer : IConsumer<ResponceUserDto>
+    //{
+    //    public Task Consume(ConsumeContext<ResponceUserDto> context)
+    //    {
+    //        var message = context.Message;
+    //        Console.WriteLine(message);
+    //        return Task.CompletedTask;
+    //    }
+    //}
 }

@@ -113,7 +113,21 @@ namespace UserServer.WebHost.Controllers.V1
                 var responseUserDto = await _userService.GetUserByUserName(user.UserName);
                 if (responseUserDto != null)
                 {
-                    await _bus.Publish(responseUserDto);
+                    Guid userId;
+                    if (Guid.TryParse(responseUserDto.Id, out userId))
+                    {
+                        var nickName = responseUserDto.UserName;
+                        if (string.IsNullOrEmpty(nickName))
+                        {
+                            nickName = $"{responseUserDto.FirstName} {responseUserDto.LastName}";
+                        }
+
+                        await _bus.Publish(new NotificationService.Models.DefaultUserInfo(
+                            userId,
+                            nickName,
+                            responseUserDto.Email,
+                            "UserService"));
+                    }
                 }
 
                 return CreatedAtAction(nameof(GetUsersByUserName), new { userName = user.UserName }, user);
