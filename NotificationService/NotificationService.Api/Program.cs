@@ -3,6 +3,7 @@ using NotificationService.MailServices.Helper;
 using NotificationService.Api.Helpers;
 using NotificationService.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using NotificationService.DataAccess.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +45,10 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-    db.Database.Migrate();
+    await db.Database.MigrateAsync();
+
+    var dbSeedHelper = new DbSeedHelper(config, db);
+    await dbSeedHelper.CreateDefaultMessengerAsync();
 }
 
 app.Run();
