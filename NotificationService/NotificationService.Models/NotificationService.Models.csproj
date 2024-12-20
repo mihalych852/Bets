@@ -12,7 +12,7 @@
 		<!-- Параметры для NuGet-пакета -->
 		<PackageId>$(AssemblyName)</PackageId>
 		<!-- Уникальный идентификатор пакета -->
-		<VersionPrefix>1.0.2</VersionPrefix>
+		<VersionPrefix>1.0.3</VersionPrefix>
 		<!-- Установка версии пакета -->
 		<Description>Описание для вашего пакета</Description>
 		<!-- Описание пакета -->

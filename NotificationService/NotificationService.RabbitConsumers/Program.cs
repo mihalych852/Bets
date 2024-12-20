@@ -31,11 +31,12 @@ public class Program
                     .AddServices(configuration)
                     .AddMassTransit(x =>
                     {
-                        x.AddConsumer<IncomingMessageAddConsumer>(); 
+                        x.AddConsumer<IncomingMessageAddConsumer>();
+                        x.AddConsumer<DefaultUserInfoAddConsumer>();
                         x.UsingRabbitMq((context, cfg) =>
                         {
                             ConfigureRmq(cfg, configuration);
-                            RegisterEndPoints(cfg, context);
+                            RabbitHelper.RegisterEndPoints(cfg, context);
                         });
                     });
                 services.AddHostedService<MasstransitService>();
@@ -73,24 +74,5 @@ public class Program
                 h.Username(rmqSettings.Login);
                 h.Password(rmqSettings.Password);
             });
-    }
-
-    /// <summary>
-    /// регистрация эндпоинтов
-    /// </summary>
-    /// <param name="configurator"></param>
-    private static void RegisterEndPoints(IRabbitMqBusFactoryConfigurator configurator, IRegistrationContext context)
-    {
-        configurator.ReceiveEndpoint($"masstransit_incomingmessage_queue", e =>
-        {
-            e.Consumer<IncomingMessageAddConsumer>(context);
-            e.UseMessageRetry(r =>
-            {
-                r.Incremental(3, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
-            });
-            e.PrefetchCount = 1;
-            e.UseConcurrencyLimit(1);
-        });
-
     }
 }

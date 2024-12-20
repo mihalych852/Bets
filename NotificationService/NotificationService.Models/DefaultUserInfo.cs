@@ -1,9 +1,18 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace NotificationService.Models
 {
     public sealed class DefaultUserInfo
     {
+        [JsonConstructor]
+        [SetsRequiredMembers]
+        public DefaultUserInfo(BettorAddressesRequest address, BettorRequest bettor)
+        {
+            this.Bettor = bettor;
+            this.Address = address;
+        }
+
         [SetsRequiredMembers]
         public DefaultUserInfo(Guid bettorId, string nickname, string email, string createdBy)
         {
