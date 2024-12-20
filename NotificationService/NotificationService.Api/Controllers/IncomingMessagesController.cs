@@ -6,7 +6,7 @@ using NotificationService.Services;
 namespace NotificationService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class IncomingMessagesController : ControllerBase
     {
         private readonly ILogger<IncomingMessagesController> _logger;

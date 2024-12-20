@@ -1,16 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>Abstractions.$(AssemblyName)</PackageId>
-    <Title>Abstractions.$(AssemblyName)</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<!-- Основные параметры -->
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="rem xcopy /y &quot;bin\$(ConfigurationName)\Abstractions.$(AssemblyName).$(VersionPrefix).nupkg&quot;  &quot;..\..\packages&quot;" />
-  </Target>
+		<!-- Настройки для NuGet-пакета -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>Abstractions.$(AssemblyName)</PackageId>
+		<Title>Abstractions.$(AssemblyName)</Title>
+		<Authors>YourName</Authors>
+		<Company>YourCompany</Company>
+		<Description>General abstraction library</Description>
+		<VersionPrefix>1.0.0</VersionPrefix>
+		<PackageOutputPath>..\..\LocalNuget</PackageOutputPath>
+	</PropertyGroup>
+
+	<!-- Дополнительная задача (опционально) -->
+	<Target Name="PostBuild" AfterTargets="PostBuild">
+		<Message Text="Package created in $(PackageOutputPath)" Importance="high" />
+	</Target>
 
 </Project>

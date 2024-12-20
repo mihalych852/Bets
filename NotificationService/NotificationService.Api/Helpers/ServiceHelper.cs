@@ -19,9 +19,9 @@ namespace NotificationService.Api.Helpers
             //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
             //services.AddDbContextFactory<DatabaseContext>(options => options.UseSqlServer(connectionString));
             services.AddDbContextFactory<DatabaseContext>(options => options.UseNpgsql(string.Format(connectionString
-                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBBASE")
-                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBUSER")
-                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBPASSWORD"))));
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBBASE_NOTIFICATION")
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBUSER_NOTIFICATION")
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBPASSWORD_NOTIFICATION"))));
 
             services
                 .AddScoped<IncomingMessagesService>()

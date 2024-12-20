@@ -2,26 +2,26 @@ services:
   betsService:
     image: ${DOCKER_REGISTRY-}betsservice
     build:
-      context: .
-      dockerfile: BetsService.Api/Dockerfile
+      context: ..
+      dockerfile: BetsService/BetsService.Api/Dockerfile
     ports:
-      - "5142:8080"
+      - "5039:8080"
       - "7127:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
-      - ASPNETCORE_DBPASSWORD=${ASPNETCORE_DBPASSWORD}
-      - ASPNETCORE_DBBASE=${ASPNETCORE_DBBASE}
+      - ASPNETCORE_DBUSER_BETS=${ASPNETCORE_DBUSER_BETS}
+      - ASPNETCORE_DBPASSWORD_BETS=${ASPNETCORE_DBPASSWORD_BETS}
+      - ASPNETCORE_DBBASE_BETS=${ASPNETCORE_DBBASE_BETS}
       - ASPNETCORE_REDIS_PASSWORD=${ASPNETCORE_REDIS_PASSWORD}
-      - ASPNETCORE_REDISPORT=${ASPNETCORE_REDISPORT}
+      - ASPNETCORE_REDIS_PORT=${ASPNETCORE_REDIS_PORT}
     depends_on:
-    - betsDb  
+      - betsDb
   betsDb:
     image: postgres:latest
     environment:
-      POSTGRES_DB: ${ASPNETCORE_DBBASE}
-      POSTGRES_USER: ${ASPNETCORE_DBUSER}
-      POSTGRES_PASSWORD: ${ASPNETCORE_DBPASSWORD}
+      POSTGRES_DB: ${ASPNETCORE_DBBASE_BETS}
+      POSTGRES_USER: ${ASPNETCORE_DBUSER_BETS}
+      POSTGRES_PASSWORD: ${ASPNETCORE_DBPASSWORD_BETS}
     ports:
       - "5434:${ASPNETCORE_DBPORT}"
     volumes:
@@ -31,5 +31,4 @@ volumes:
 
 networks:
   default:
-    name: "BestNetwoks"  
-
+    name: "BestNetwoks"

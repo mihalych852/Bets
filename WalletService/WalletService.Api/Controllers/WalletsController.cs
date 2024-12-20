@@ -6,7 +6,7 @@ using WalletService.Models;
 namespace WalletService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class WalletsController : ControllerBase
     {
         private readonly ILogger<WalletsController> _logger;
@@ -26,7 +26,7 @@ namespace WalletService.Api.Controllers
         /// <param name="ct"></param>
         /// <returns>Идентификатор транзакции</returns>
         [HttpPost]
-        [Route("CreditAsync")]
+        [Route("credit")]
         public async Task<IActionResult> CreditAsync([FromBody] TransactionsRequest request
             , CancellationToken ct)
         {
@@ -49,7 +49,7 @@ namespace WalletService.Api.Controllers
         /// <param name="ct"></param>
         /// <returns>Идентификатор транзакции</returns>
         [HttpPost]
-        [Route("DebitAsync")]
+        [Route("debit")]
         public async Task<IActionResult> DebitAsync([FromBody] TransactionsRequest request
             , CancellationToken ct)
         {

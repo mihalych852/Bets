@@ -1,0 +1,69 @@
+name: Build and Pack Solutions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup .NET environment
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0
+
+      # Создание packages
+      - name: Create packages directory
+        run: |
+          mkdir -p ./LocalNuget
+
+      # Шаг 3: Восстановление зависимостей для всех .csproj
+      - name: Restore NuGet packages
+        run: |
+          # Найти все .csproj файлы в каталоге Abstractions
+          for csproj in $(find ./Abstractions -name "*.csproj"); do
+            echo "Restoring dependencies for $csproj"
+            dotnet restore $csproj --configfile ./nuget.config
+          done
+          dotnet restore ./NotificationService/NotificationService.Models/NotificationService.Models.csproj --configfile ./nuget.config
+
+      # Шаг 4: Сборка всех .csproj файлов
+      - name: Build projects
+        run: |
+          # Найти все .csproj файлы и собрать их
+          for csproj in $(find ./Abstractions -name "*.csproj"); do
+            echo "Building $csproj"
+            dotnet build $csproj --configuration Release
+          done
+          dotnet build ./NotificationService/NotificationService.Models/NotificationService.Models.csproj --configuration Release
+
+      # Шаг 5: Упаковка всех проектов в NuGet пакеты
+      # Найти все .csproj файлы и упаковать их в NuGet пакеты
+      - name: Pack NuGet packages
+        run: |
+          for csproj in $(find ./Abstractions -name "*.csproj"); do
+            echo "Packing NuGet package for $csproj"
+            dotnet pack $csproj --configuration Release --output ./LocalNuget
+          done
+          dotnet pack ./NotificationService/NotificationService.Models/NotificationService.Models.csproj --configuration Release --output ./LocalNuget
+
+      # 6. Restore and build services
+      # Перебираем все сервисы и выполняем restore и build
+      - name: Restore and build solutions
+        run: |
+          for solution in ./ApiGateway/*.sln ./NotificationService/*.sln ./UserService/*.sln ./WalletService/*.sln ./BetsService/*.sln; do
+            echo "Restoring and building solution $solution"
+            dotnet restore $solution
+            dotnet build $solution -c Release
+          done

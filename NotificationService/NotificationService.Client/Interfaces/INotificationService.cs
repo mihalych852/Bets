@@ -1,6 +1,6 @@
 ﻿using Bets.Abstractions.Domain.Repositories.ModelRequests;
-using NotificationService.Models;
 using Bets.Abstractions.Model;
+using NotificationService.Models;
 
 namespace NotificationService.Client.Interfaces
 {

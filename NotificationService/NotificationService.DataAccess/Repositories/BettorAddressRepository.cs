@@ -1,11 +1,12 @@
 ﻿using Bets.Abstractions.DataAccess.EF.Repositories;
+using Bets.Abstractions.Domain.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NotificationService.Domain.Directories;
 
 namespace NotificationService.DataAccess.Repositories
 {
-    public class BettorAddressRepository : LaterDeletedEntityRepository<BettorAddresses>
+    public class BettorAddressRepository : LaterDeletedEntityRepository<BettorAddresses>, IBettorAddressRepository
     {
         ///// <summary>
         ///// Конструктор
@@ -23,6 +24,8 @@ namespace NotificationService.DataAccess.Repositories
         /// <param name="id">Идентификатор сущности</param>
         public override async Task<BettorAddresses?> GetByIdAsync(Guid id)
         {
+            //throw new InvalidDataException("Test serilog!!!!!!");
+
             return await _entitySet.Where(x => x.Id == id && x.DeletedDate == null)
                 .Include("Bettor")
                 .Include("Messenger")
