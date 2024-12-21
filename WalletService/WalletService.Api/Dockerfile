@@ -9,6 +9,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+# Копируем nuget.config и локальные пакеты в контейнер
+COPY ../nuget.config ./
+COPY ../LocalNuget/ ./LocalNuget/
+
 COPY ["WalletService.Api/WalletService.Api.csproj", "WalletService.Api/"]
 RUN dotnet restore "./WalletService.Api/WalletService.Api.csproj"
 COPY . .
