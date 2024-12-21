@@ -48,11 +48,7 @@ namespace BetsService.Services
                 throw new Exception(ex.ToString());
             }
         }
-        private static decimal CalcCoef()
-        {
-            var rand = new Random();
-            return (decimal)(rand.Next(1, 6) + Math.Round(rand.NextDouble(), 3));
-        }
+
         public async Task<EventOutcomeResponse> GetEventOutcomeAsync(Guid id)
         {
             try
