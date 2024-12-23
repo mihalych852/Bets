@@ -20,7 +20,7 @@ namespace UserServer.DataAccess.Extensions
         {
             var rabitConfig = configuration.GetSection("Rabit");
 
-            var rabitPortStr = Environment.GetEnvironmentVariable("ASPNETCORE_RABITPROT");
+            var rabitPortStr = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PORT");
             if (string.IsNullOrEmpty(rabitPortStr)) 
             {
                 throw new ArgumentNullException(nameof(rabitPortStr), "Не найдена конфигурация RabbitMQ");
@@ -32,17 +32,18 @@ namespace UserServer.DataAccess.Extensions
 
             var rabitUser = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_USER");
             var rabitPassword = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PASSWORD");
+            var rabitVHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_VHOST");
 
-            if (string.IsNullOrEmpty(rabitPassword) || string.IsNullOrEmpty(rabitUser))
-                throw new ArgumentNullException("Не найден логин или пароль");
+            if (string.IsNullOrEmpty(rabitPassword) || string.IsNullOrEmpty(rabitUser) || string.IsNullOrEmpty(rabitVHost))
+                throw new ArgumentNullException("Не найден логин, пароль или виртуальный хост rabiit");
 
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<UserCreatedConsumer>();
+                //x.AddConsumer<UserCreatedConsumer>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(rabitConfig["HostName"], rabitPort, rabitConfig["VHost"], (h) =>
+                    cfg.Host(rabitConfig["HostName"], rabitPort, rabitVHost, (h) =>
                     {
                         h.Username(rabitUser); // Укажите имя пользователя
                         h.Password(rabitPassword); // Укажите пароль
@@ -55,16 +56,16 @@ namespace UserServer.DataAccess.Extensions
         }
     }
 
-    /// <summary>
-    /// для примера работы с паблишем юзеров оставил очень временно
-    /// </summary>
-    public class UserCreatedConsumer : IConsumer<ResponceUserDto>
-    {
-        public Task Consume(ConsumeContext<ResponceUserDto> context)
-        {
-            var message = context.Message;
-            Console.WriteLine(message);
-            return Task.CompletedTask;
-        }
-    }
+    ///// <summary>
+    ///// для примера работы с паблишем юзеров оставил очень временно
+    ///// </summary>
+    //public class UserCreatedConsumer : IConsumer<ResponceUserDto>
+    //{
+    //    public Task Consume(ConsumeContext<ResponceUserDto> context)
+    //    {
+    //        var message = context.Message;
+    //        Console.WriteLine(message);
+    //        return Task.CompletedTask;
+    //    }
+    //}
 }

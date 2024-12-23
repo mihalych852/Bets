@@ -10,11 +10,11 @@ namespace NotificationService.Services
 {
     public class BettorAddressesService
     {
-        private readonly BettorAddressRepository _repository;
+        private readonly IBettorAddressRepository _repository;
         private readonly ILogger<BettorAddressesService> _logger;
         private readonly IMapper _mapper;
 
-        public BettorAddressesService(BettorAddressRepository bettorsRepository
+        public BettorAddressesService(IBettorAddressRepository bettorsRepository
             , ILogger<BettorAddressesService> logger
             , IMapper mapper
             )
@@ -66,7 +66,7 @@ namespace NotificationService.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"[BettorAddressesService][GetBettorAddressesAsync] Exception: {ex.ToString()}");
-                throw new Exception(ex.ToString());
+                throw; // new Exception(ex.ToString());
             }
         }
 

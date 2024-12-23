@@ -20,9 +20,9 @@ namespace BetsService.Api.Helpers
 
             //services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString));
             services.AddDbContextFactory<DatabaseContext>(options => options.UseNpgsql(string.Format(connectionString
-                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBBASE")
-                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBUSER")
-                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBPASSWORD"))));
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBBASE_BETS")
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBUSER_BETS")
+                    , Environment.GetEnvironmentVariable("ASPNETCORE_DBPASSWORD_BETS"))));
 
             services
                 .AddScoped<EventsService>()
@@ -40,7 +40,7 @@ namespace BetsService.Api.Helpers
                 throw new NullReferenceException(nameof(conntectionResdis));
 
             conntectionResdis = string.Format(conntectionResdis,
-                Environment.GetEnvironmentVariable("ASPNETCORE_REDISPORT"),
+                Environment.GetEnvironmentVariable("ASPNETCORE_REDIS_PORT"),
                 Environment.GetEnvironmentVariable("ASPNETCORE_REDIS_PASSWORD"));
 
             services.AddStackExchangeRedisCache(option =>

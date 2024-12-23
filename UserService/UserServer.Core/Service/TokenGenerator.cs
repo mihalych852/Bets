@@ -26,9 +26,9 @@ namespace UserServer.Core.Service
         {
             var claim = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNamesNew.Sub, user.Id),
-                new Claim(JwtRegisteredClaimNamesNew.Email, user.Email),
-                new Claim(JwtRegisteredClaimNamesNew.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName),
             };
 
             var roles = await _userManager.GetRolesAsync(user);

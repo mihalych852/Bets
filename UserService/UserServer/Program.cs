@@ -34,8 +34,8 @@ namespace UserServer
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "User Service API V1"); // Установка конечной точки для Swagger
-                    c.RoutePrefix = string.Empty; // Устанавливаем Swagger UI на корень (http://localhost:5000/)
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "User Service API V1"); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ Swagger
+                    c.RoutePrefix = string.Empty; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Swagger UI пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (http://localhost:5000/)
                 });
             }
             else
@@ -54,7 +54,7 @@ namespace UserServer
 
             app.UseAuthorization();
 
-            // Настройка конечных точек
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             app.MapControllers();
             app.UseCors();
 

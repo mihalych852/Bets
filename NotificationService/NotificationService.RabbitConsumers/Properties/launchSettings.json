@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NotificationService.RabbitConsumers": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

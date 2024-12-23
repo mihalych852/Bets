@@ -30,8 +30,8 @@ namespace UserServer.WebHost.Controllers.V1
         {
             var cacheKey = DefaultPreficsCashe + "All";
 
-            var roles = await _cache.GetOrSerAsync(cacheKey, 
-                async () => await _roleService.GetAllRolesAsync(), 
+            var roles = await _cache.GetOrSerAsync(cacheKey,
+                async () => await _roleService.GetAllRolesAsync(),
                 TimeSpan.FromMinutes(30));
 
             LogInformationByUser("Запросил все роли");
@@ -40,8 +40,8 @@ namespace UserServer.WebHost.Controllers.V1
         }
 
         // Получение ролей пользователя
-        [HttpGet("{userId}/roles")]
-        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(string userId)
+        [HttpGet("userRoles")]
+        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles([FromQuery] string userId)
         {
             var cachKey = DefaultPreficsCashe + "User." + userId;
             var roles = await _cache.GetOrSerAsync(cachKey,
@@ -53,8 +53,8 @@ namespace UserServer.WebHost.Controllers.V1
         }
 
         // Получение пользователей в роли
-        [HttpGet("users-in-role/{roleName}")]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsersInRole(string roleName)
+        [HttpGet("usersInRole")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsersInRole([FromQuery] string roleName)
         {
             var cachKey = DefaultPreficsCashe + "Role." + roleName;
             var users = await _cache.GetOrSerAsync(cachKey,
@@ -68,15 +68,15 @@ namespace UserServer.WebHost.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<RoleDto>> CreateRole(string roleName)
+        public async Task<ActionResult<RoleDto>> CreateRole([FromBody] string roleName)
         {
             var createdRole = await _roleService.CreateRoleAsync(roleName);
             LogInformationByUser($"Создал роль = {roleName}");
             return CreatedAtAction(nameof(GetRoles), createdRole);
         }
 
-        [HttpPost("{userId}")]
-        public async Task<IActionResult> AddUserToRole(string userId, RoleDto role)
+        [HttpPost("AddUserRole")]
+        public async Task<IActionResult> AddUserToRole([FromQuery] string userId,[FromBody] RoleDto role)
         {
             var result = await _roleService.AddUserToRoleAsync(userId, role);
             if (result.Succeeded) 
@@ -88,8 +88,8 @@ namespace UserServer.WebHost.Controllers.V1
             return BadRequestHttp($"Failed to add user to role: {string.Join(", ", result.Errors.Select(e => e.Description))}");
         }
 
-        [HttpDelete("{userId}&roles={roleName}")]
-        public async Task<IActionResult> RemoveUserFromRole(string userId, RoleDto role)
+        [HttpDelete("removeUserRole")]
+        public async Task<IActionResult> RemoveUserFromRole([FromQuery] string userId, [FromBody] RoleDto role)
         {
             var result = await _roleService.RemoveUserFromRoleAsync(userId, role);
             if (result.Succeeded) 
