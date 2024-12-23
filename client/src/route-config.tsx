@@ -16,7 +16,7 @@ const routes = [
     //Bets
     {path:'/bets', element: <IndexBets/>},
     
-    //Login+Logout?
+    //Login+Logout
     {path:'/register', element: <Register/>},
     {path:'/login', element: <Login/>},
     {path:'/profile', element: <Profile/>},

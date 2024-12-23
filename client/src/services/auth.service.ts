@@ -2,14 +2,10 @@
 
 import axios from "axios";
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { urlUserService } from "../endpoints";
-
-
-//const API_URL = "http://localhost:5000/api/v1/Auth/";
-const API_URL = urlUserService + "api/v1/Auth/";
+import { urlUserServiceGetInfo, urlUserServiceLogin, urlUserServiceLogout, urlUserServiceRegister } from "../endpoints";
 
 export const register = (username: string, email: string, password: string) => {
-  return axios.post(API_URL + "signup", {
+  return axios.post(urlUserServiceRegister, {
     username,
     email,
     password,
@@ -18,7 +14,7 @@ export const register = (username: string, email: string, password: string) => {
 
 export const login = (email: string, password: string) => {
   return axios
-    .post(API_URL + "login", {
+    .post(urlUserServiceLogin, {
       email,
       password,
     })
@@ -34,9 +30,9 @@ export const login = (email: string, password: string) => {
     .catch((error) => console.error(error));
 };
 
-const getUserInfo = () => {
+export const getUserInfo = () => {
   return axios
-    .get(API_URL + "GetUserInfo")
+    .get(urlUserServiceGetInfo)
     .then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data));
         console.log(response.data);
@@ -51,7 +47,7 @@ export const logout = async () => {
     // localStorage.removeItem("user");
     // localStorage.removeItem("token");
       const res = await axios({
-      url: API_URL + "logout",
+      url: urlUserServiceLogout,
       method: "POST",
     })
     .then(() => {
@@ -68,7 +64,6 @@ export const logout = async () => {
 export const getCurrentUser = () => {
   const userStr = localStorage.getItem("user");
   if (userStr){
-
     return JSON.parse(userStr);
   } 
 

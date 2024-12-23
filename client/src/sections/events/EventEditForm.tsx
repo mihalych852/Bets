@@ -4,6 +4,7 @@ import Button from "../../components/Button";
 import * as Yup from 'yup';
 import TextField from "../../components/forms/TextField";
 import { eventUpdateDTO } from "../../events/DTO/eventUpdateDTO.model";
+import { getCurrentUser } from "../../services/auth.service";
 
 export default function EventEditForm(props: eventEditFormProps){
 return(
@@ -17,19 +18,7 @@ return(
     {(formikProps) => (
         <Form>
         <TextField title="Описание события" field="description" />
-        <TextField title="Описание события" field="id" />
-        <div className="row">
-            {/* <div className="mb-3 col-6">
-                <label htmlFor="eventStartTime">Дата начала события</label>
-                <Field name="eventStartTime" type="date" className="form-control" />
-            </div>
-            <div className="mb-3 col-6">
-                <label htmlFor="betsEndTime">Дата завершения события</label>
-                <Field name="betsEndTime" type="date" className="form-control" />
-            </div> */}
-        </div>
         <div className="mb-3">
-
         <Field className="form-select" as="select" name="status">
              <option value="0">Ожидается</option>
              <option value="1">В процессе</option>

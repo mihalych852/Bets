@@ -2,49 +2,69 @@ import { useNavigate, useParams } from "react-router-dom";
 import EventEditForm from "../../sections/events/EventEditForm";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { urlEventsCreate, urlEventsEdit, urlEventsGetById } from "../../endpoints";
+import { urlEventsEdit, urlEventsGetById } from "../../endpoints";
 import { eventUpdateDTO } from "../../events/DTO/eventUpdateDTO.model";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import OutcomeForm from "../../sections/events/OutcomeForm";
 import { createOutcome } from "../../services/event.service";
 import { eventOutcomeRequestDTO } from "../../events/DTO/eventOutcomeRequestDTO.model";
-import { eventDTO } from "../../events/DTO/eventDTO.model";
 import { eventOutcomeDTO } from "../../events/DTO/eventOutcomeDTO.model";
-import OutcomeLookup from "../../sections/OutcomeLookup";
 import OutcomeLookupForList from "../../sections/events/OutcomeLookupForList";
 import { Table } from "react-bootstrap";
+import { getCurrentUser } from "../../services/auth.service";
+import AdministativePanel from "./AdministativePanel";
+import OutcomeForm from "../../sections/events/OutcomeForm";
 
 export default function EditEvent(){
     const {id} : any = useParams();
-    const userLogin = "admin";
+      const currentUser = getCurrentUser();    
+    const userLogin = currentUser?.email;
     const navigate = useNavigate();
     const par = useParams();
 
-    const [eventInfo, setEventInfo] = useState<eventUpdateDTO>({
-        description: "0", id: "0", betsEndTime: new Date(), 
-        eventStartTime: new Date(), status: 0, modifyBy:"aaa"  });
-
-    const [outComes, setData] = useState<eventOutcomeDTO[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [eventInfo, setEventInfo] = useState<eventUpdateDTO>();
+    const [outComes, setOutcomes] = useState<eventOutcomeDTO[]>([]);
 
     useEffect(() => {
-            if(id){
             axios.get(urlEventsGetById+id)
-            .then((response: AxiosResponse<eventUpdateDTO>) => {
+            .then((response) => {
                 console.log(response.data);
-                setEventInfo(response.data);
-                //setData(response.data.) get outcomes
+                //setEventInfo(p => ({...response.data, modifiedBy: userLogin}));                
+                setEventInfo(response.data);                
+                setOutcomes(response.data.eventOutcomes);
             }).catch(err => {
                 console.log(err)
             });
-        }; 
+    }, [id])
 
-    }, [])
+    async function editEvent(eventToEdit: eventUpdateDTO) {
+      eventToEdit.modifiedBy = userLogin;
+      //cast enum to number or get error
+      switch(eventToEdit.status.toString()){
+        case '0':
+          eventToEdit.status = 0;
+          break;
+          case '1':
+            eventToEdit.status = 1;
+            break;
+            case '2':
+              eventToEdit.status = 2;
+              break;
+              case '3':
+                eventToEdit.status = 4;
+                break;
+      }
+      try{
+        await axios.post(urlEventsEdit, eventToEdit); 
+        navigate('../events');
+      }
+      catch(error){
+          console.log(error);
+      }
+    }
 
     const handleSave = (formValue: eventOutcomeRequestDTO) => {
-        const { description, eventId } = formValue;
-        createOutcome(description, eventId).then(
+        const { description, eventId, createdBy } = formValue;
+        createOutcome(description, eventId, createdBy).then(
           () => {
             window.location.reload();
           },
@@ -64,42 +84,28 @@ export default function EditEvent(){
     return(
     <>
     <div className="mb-5">
-        <FF model={eventInfo}  />
         <h4>Редактировать событие</h4>
-        <input className="form-control" value={eventInfo.id} />
-        <input className="form-control"  value={eventInfo.description} />
-        <EventEditForm model= {eventInfo
-        //     {modifyBy: "admin",
-        //     description: eventInfo?.description ?? "", 
-        // id: id, 
-        // status: eventInfo?.status ?? 0, 
-        // eventStartTime: eventInfo?.eventStartTime ?? new Date(), 
-        // betsEndTime: eventInfo?.betsEndTime ?? new Date()}
-    } 
-        onSubmit={value => {
-            //when the form posted
-            console.log(value);
-                axios({
-                  method: 'POST',
-                  url: urlEventsEdit,
-                  data: value
-                })
-                  .then(function (res) {
-                     console.log(res)
-                  })
-                  .catch(function (res) {
-                     console.log(res)
-                });
-                navigate('../events');
+        {eventInfo ? <EventEditForm model= {eventInfo} 
+        onSubmit={async value => {
+              console.log(value);
+                editEvent(value);
               }
             }
-        />
+        /> :
+          <span className="spinner-border spinner-border"></span>
+        }
+
 
     </div>
     <div>
         <h5>Список исходов</h5>
         <div className="row">
-            <OutcomeForm model={{description: '', createdBy: userLogin, eventId: eventInfo.id}} onSubmit={handleSave}/>
+          {outComes ? 
+            <OutcomeForm model={{description: '', eventId: id, createdBy: userLogin}}  
+            onSubmit={handleSave}/>
+            :
+            <span className="spinner-border spinner-border"></span>
+          }
         </div>
         <div className="mb-3">
           <Table striped className="w-100">
@@ -107,7 +113,7 @@ export default function EditEvent(){
               <tr><th>Описание</th><th>Коэф.</th><th>Статус</th></tr>
             </thead>
             <tbody>
-              {eventInfo.eventOutcomes?.map(events => <OutcomeLookupForList {...events} key={events.id}/>)}
+              {outComes?.map(events => <OutcomeLookupForList {...events} key={events.id}/>)}
 
             </tbody>
           </Table>
@@ -120,14 +126,14 @@ export default function EditEvent(){
     </>
 )}; 
 
-export function FF(props: ieventUpdateDTO){
-    return(
-        <>
-                    <input value={props.model.id} />
+// export function FF(props: ieventUpdateDTO){
+//     return(
+//         <>
+//                     <input value={props.model.id} />
 
-        </>
-    )
-}
+//         </>
+//     )
+// }
 interface ieventUpdateDTO{
     model: eventUpdateDTO;
 }

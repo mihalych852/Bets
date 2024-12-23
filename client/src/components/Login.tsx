@@ -3,7 +3,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { login } from "../services/auth.service";
+import { login, getUserInfo } from "../services/auth.service";
 
 type Props = {}
 
@@ -34,8 +34,8 @@ const Login: React.FC<Props> = () => {
 
     login(email, password).then(
       () => {
+        getUserInfo();
         navigate("/profile");
-
       },
       (error) => {
         const resMessage =

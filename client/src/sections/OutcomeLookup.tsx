@@ -14,8 +14,8 @@ export default function OutcomeLookup(props: eventOutcomeDTO){
         border: "1px solid lightgray"
       }
   const currentUser = getCurrentUser();
-    const userLogin = currentUser.userName ?? currentUser.email;
-    const bettorId = "b314e08e-5e6c-4215-b8df-506e884960f4";
+    const userLogin = currentUser?.userName ?? currentUser?.email;
+    const bettorId = currentUser?.id;
     
     //еще нужно пересчитывать коэф и перерерисовывать элемент, т.к. он меняется 
     return(

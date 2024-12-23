@@ -12,10 +12,14 @@ export const urlEventsGetById = `${baseURL}/api/events/`;
 export const urlOutComeCreate = `${baseURL}/api/eventOutcomes/create`;
 
 export const urlBetCreate = `${baseURL}/Bets/create`;
+export const urlBetGetForUser = `${baseURL}/Bets/forBettor/`;
 
 export const urlWalletAdd = `${baseURLWallet}/Wallets/CreditAsync`;
-export const urlWalletGetBalance = `${baseURLWallet}/Wallets/balance`;
+export const urlWalletGetBalance = `${baseURLWallet}/Wallets/balance/`;
 export const urlWalletDebit = `${baseURLWallet}/Wallets/DebitAsync`;
 
 
-export const urlUserService = `${baseURLUser}/`;
+export const urlUserServiceLogin = `${baseURLUser}/api/v1/Auth/login`;
+export const urlUserServiceRegister = `${baseURLUser}/api/v1/Auth/signup`;
+export const urlUserServiceLogout = `${baseURLUser}/api/v1/Auth/logout`;
+export const urlUserServiceGetInfo = `${baseURLUser}/api/v1/Auth/GetUserInfo`;

@@ -1,17 +1,14 @@
 import axios from "axios";
-import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { urlOutComeCreate } from "../endpoints";
-import { getCurrentUser } from "./auth.service";
 
 
-export const createOutcome = (description: string, eventId: string) => {
-    const user = getCurrentUser();
-    const createBy = user.email;
+export const createOutcome = (description: string, eventId: string, createdBy: string) => {
+  console.log(eventId, createdBy, description);
   return axios
     .post(urlOutComeCreate, {
         description, 
         eventId,
-        createBy
+        createdBy
     })
     .then((response) => {
       console.log(response);
