@@ -20,7 +20,8 @@ namespace BetsService.Services.Helpers
 
             CreateMap<BetsRequest, Domain.Bets>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
-            CreateMap<Domain.Bets, BetsResponse>();
+            CreateMap<Domain.Bets, BetsResponse>()
+                .ForMember(d => d.Description, opt => opt.MapFrom(src => src.EventOutcomes.Description));
         }
     }
 }
