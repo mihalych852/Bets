@@ -2,8 +2,8 @@ services:
   walletservice:
     image: ${DOCKER_REGISTRY-}walletservice
     build:
-      context: .
-      dockerfile: WalletService.Api/Dockerfile
+      context: ..
+      dockerfile: WalletService/WalletService.Api/Dockerfile
     ports:
       - "5038:8080"
       - "7011:8081"

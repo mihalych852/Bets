@@ -5,7 +5,7 @@ services:
       context: ..
       dockerfile: NotificationService/NotificationService.Api/Dockerfile
     ports:
-      - "5039:8080"
+      - "5040:8080"
       - "7283:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

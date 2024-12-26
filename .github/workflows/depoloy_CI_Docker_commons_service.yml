@@ -1,0 +1,39 @@
+name: Deploy to Production Docker commons service
+
+on:
+  workflow_dispatch: # Ручной запуск через вкладку Actions
+  workflow_run:
+    workflows: ["Build and Test"] # Проверяет завершение первого workflow
+    types:
+      - completed
+jobs:
+  docker-deploy:
+    runs-on: ubuntu-latest
+    # Выполняется только если первый workflow завершился успешно
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} && github.ref == 'refs/heads/master' && github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+      - name: Add SSH key to known hosts
+        run: ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+      - name: Build and run Docker
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/github/ci_test/project/CommonServicesDocker/
+
+            # Остановка и удаление старых контейнеров
+            echo "Stopping and removing existing containers..."
+            docker-compose down
+
+            # Запуск docker-compose
+            echo "Starting docker-compose..."
+            docker-compose up -d
+
+            # Проверка статуса контейнеров
+            docker ps -a

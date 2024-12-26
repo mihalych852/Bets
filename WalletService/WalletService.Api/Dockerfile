@@ -7,13 +7,22 @@ EXPOSE 8080
 EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WalletService.Api/WalletService.Api.csproj", "WalletService.Api/"]
-RUN dotnet restore "./WalletService.Api/WalletService.Api.csproj"
-COPY . .
-WORKDIR "/src/WalletService.Api"
-RUN dotnet build "./WalletService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Копируем всю папку UserServer в контейнер
+COPY ../WalletService ./WalletService
+
+# Копируем nuget.config и локальные пакеты в контейнер
+COPY ../nuget.config ./
+COPY ../LocalNuget/ ./LocalNuget/
+
+# Устанавливаем рабочую директорию для восстановления зависимостей
+WORKDIR "/src/WalletService/WalletService.Api"
+
+RUN dotnet restore "./WalletService.Api.csproj"
+
+# Собираем приложение
+RUN dotnet build "WalletService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

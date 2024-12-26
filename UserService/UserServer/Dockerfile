@@ -10,6 +10,10 @@ WORKDIR /src
 # Копируем всю папку UserServer в контейнер
 COPY ../UserService ./UserService
 
+# Копируем nuget.config и локальные пакеты в контейнер
+COPY ../nuget.config ./
+COPY ../LocalNuget/ ./LocalNuget/
+
 # Устанавливаем рабочую директорию для восстановления зависимостей
 WORKDIR "/src/UserService/UserServer"
 
