@@ -1,7 +1,12 @@
 //const baseURL = process.env.REACT_APP_API_URL;
-const baseURL = 'https://localhost:7127';
-const baseURLWallet = 'https://localhost:7011';
-const baseURLUser = 'http://localhost:5000';
+// const baseURL = 'https://localhost:7127';
+// const baseURLWallet = 'https://localhost:7011';
+// const baseURLUser = 'http://localhost:5000';
+const baseURL = 'https://localhost:5055/Bets/bets';
+const baseURLWallet = 'https://localhost:5055/Bets/wallet';
+const baseURLUser = 'http://localhost:5055/Bets/user';
+
+const baseURLApiGateway = 'http://localhost:5055/Bets';
 
 //Ссылки на контроллеры в api, используются в axios
 export const urlEvents = `${baseURL}/api/events`;
