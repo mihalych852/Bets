@@ -66,7 +66,6 @@ namespace BetsService.Api.Controllers
                 var result = await _cache.GetOrSetAsync(cachKey,
                     async () => await _service.GetEventAsync(id),
                     _logger);
-
                 return Ok(result);
             }
             catch (Exception ex)

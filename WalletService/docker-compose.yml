@@ -6,7 +6,6 @@ services:
       dockerfile: WalletService/WalletService.Api/Dockerfile
     ports:
       - "5038:8080"
-      - "7011:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_DBBASE=db_wallet
