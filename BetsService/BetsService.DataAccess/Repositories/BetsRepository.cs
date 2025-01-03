@@ -15,7 +15,7 @@ namespace BetsService.DataAccess.Repositories
         /// <param name="bettorId">Идентификатор игрока</param>
         public async Task<List<Domain.Bets>> GetListByBettorIdAsync(Guid bettorId)
         {
-            return await _entitySet.Where(x => x.BettorId == bettorId).ToListAsync();
+            return await _entitySet.Include("EventOutcomes").Where(x => x.BettorId == bettorId).ToListAsync();
         }
 
         /// <summary>
@@ -28,6 +28,23 @@ namespace BetsService.DataAccess.Repositories
             var updatedCount = await _entitySet.Where(x => request.Ids.Contains(x.Id))
                 .ExecuteUpdateAsync(u => u.SetProperty(p => p.State, request.State));
             return updatedCount;
+        }
+
+        /// <summary>
+        /// Получить все ставки
+        /// </summary>
+        public async override Task<List<Domain.Bets>> GetAllAsync()
+        {
+            return await _entitySet.Include("EventOutcomes").ToListAsync();
+        }
+
+        /// <summary>
+        /// Получение сущности по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор сущности</param>
+        public override async Task<Domain.Bets?> GetByIdAsync(Guid id)
+        {
+            return await _entitySet.Include("EventOutcomes").Where(x => x.Id == id).FirstOrDefaultAsync();
         }
     }
 }

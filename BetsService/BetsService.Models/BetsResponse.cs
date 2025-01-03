@@ -28,5 +28,10 @@ namespace BetsService.Models
         /// Идентификатор события, на которое делается ставка
         /// </summary>
         public Guid EventOutcomesId { get; set; }
+
+        /// <summary>
+        /// Описание исхода, на который делается ставка
+        /// </summary>
+        public string? Description { get; set; }
     }
 }
