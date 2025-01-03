@@ -16,13 +16,24 @@ namespace ApiGateway.ApiHost
             // Add services to the container.
             builder.Services.Configure<MicroservicesConfig>(builder.Configuration.GetSection("Microservices"));
 
+            string? frontedUrl = Environment.GetEnvironmentVariable("ASPNETCORE_FRONTEND_URL");
+
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("AllowSpecificOrigin", buildPolicy =>
                 {
-                    buildPolicy.WithOrigins("http://localhost:3000", "http://client-react-app:3000")
+                    if (!string.IsNullOrEmpty(frontedUrl))
+                    {
+                        buildPolicy.WithOrigins(frontedUrl)
+                                                .AllowAnyMethod()
+                                                .AllowAnyHeader();
+                    }
+                    else
+                    {
+                        buildPolicy.WithOrigins("http://localhost:3000", "http://client-react-app:3000")
                         .AllowAnyMethod()
                         .AllowAnyHeader();
+                    }
                 });
             });
 

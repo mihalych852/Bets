@@ -2,9 +2,10 @@
 // const baseURL = 'https://localhost:7127';
 // const baseURLWallet = 'https://localhost:7011';
 // const baseURLUser = 'http://localhost:5000';
- const baseURL = 'http://localhost:5055/bets';
- const baseURLWallet = 'http://localhost:5055/bets/wallet';
- const baseURLUser = 'http://localhost:5055/bets/user';
+ //const baseURL = 'http://localhost:5055/bets';
+ const baseURL = process.env.REACT_APP_API_BASE_URL;
+ const baseURLWallet = `${baseURL}/wallet`;
+ const baseURLUser = `${baseURL}/user`;
 
 // const baseURLApiGateway = 'http://localhost:5055/bets';
 
