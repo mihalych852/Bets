@@ -5,6 +5,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+      - REACT_APP_API_BASE_URL_WALLET=${REACT_APP_API_BASE_URL_WALLET}
+      - REACT_APP_API_BASE_URL_USER=${REACT_APP_API_BASE_URL_USER}
     networks:
       - BestNetwoks  # Указываем, что используем сеть BestNetwoks
 

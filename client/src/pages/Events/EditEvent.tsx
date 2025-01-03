@@ -25,7 +25,11 @@ export default function EditEvent(){
     const [outComes, setOutcomes] = useState<eventOutcomeDTO[]>([]);
 
     useEffect(() => {
-            axios.get(urlEventsGetById+id)
+            axios.get(urlEventsGetById, {
+              params: {
+                path : id
+              }
+            })
             .then((response) => {
                 console.log(response.data);
                 //setEventInfo(p => ({...response.data, modifiedBy: userLogin}));                
