@@ -24,8 +24,16 @@ const Profile: React.FC = () => {
     useEffect(() => {
             if(currentUser.id){
               axios.all([
-                axios.get(urlWalletGetBalance+currentUser.id),
-                axios.get(urlBetGetForUser+currentUser.id)
+                axios.get(urlWalletGetBalance, {
+                  params: {
+                    path : currentUser.id
+                  }
+                }),
+                axios.get(urlBetGetForUser, {
+                  params: {
+                    path : currentUser.id
+                  }
+                })
               ])            
             .then((response) => {
               console.log(response);              

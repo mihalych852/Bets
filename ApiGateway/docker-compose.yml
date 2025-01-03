@@ -1,6 +1,6 @@
 services:
-  apigateway.apihost:
-    image: ${DOCKER_REGISTRY-}apigatewayapihost
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
     build:
       context: ..
       dockerfile: ApiGateway/ApiGateway.ApiHost/Dockerfile

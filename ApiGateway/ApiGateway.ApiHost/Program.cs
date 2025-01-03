@@ -16,6 +16,17 @@ namespace ApiGateway.ApiHost
             // Add services to the container.
             builder.Services.Configure<MicroservicesConfig>(builder.Configuration.GetSection("Microservices"));
 
+            builder.Services.AddCors(option =>
+            {
+                option.AddPolicy("AllowSpecificOrigin", buildPolicy =>
+                {
+                    buildPolicy.WithOrigins("http://localhost:3000", "http://client-react-app:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
+
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(builder.Configuration)
                 .Enrich.FromLogContext()
@@ -61,6 +72,10 @@ namespace ApiGateway.ApiHost
             });
 
             var app = builder.Build();
+
+            // Используйте CORS перед другими middleware
+            app.UseCors("AllowSpecificOrigin");
+
             app.UseHttpLogging();
 
             // Пример использования логирования

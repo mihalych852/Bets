@@ -84,7 +84,7 @@ namespace BetsService.Api.Controllers
         {
             try
             {
-                var result = await _service.GetListEventsAsync()
+                var result = await _service.GetListEventsAsync();
                 return Ok(result);
             }
             catch (Exception ex)

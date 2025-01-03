@@ -10,7 +10,8 @@
        {
            var token = httpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-           return new UserServerRequest { Token = token, requstUrl = requstUrl, Payload = payload, HttpClient = httpClient, Method = httpContext.Request.Method };
+           return new UserServerRequest { Token = token, requstUrl = GetServiceUrl(requstUrl,parameters),
+               Payload = payload, HttpClient = httpClient, Method = httpContext.Request.Method };
        }
     }
 }

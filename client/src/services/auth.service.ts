@@ -14,11 +14,12 @@ export const register = (username: string, email: string, password: string) => {
 
 export const login = (email: string, password: string) => {
   return axios
-    .post(urlUserServiceLogin, {
+    .post("http://localhost:5055/bets/user/Login", {
       email,
       password,
     })
     .then((response) => {
+      console.log("Response:", response);
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         //localStorage.setItem("token", JSON.stringify(response.data));
@@ -27,7 +28,7 @@ export const login = (email: string, password: string) => {
 
       return response.data;
     })
-    .catch((error) => console.error(error));
+    .catch((error) => console.error("Login error:", error.response ? error.response.data : error.message));
 };
 
 export const getUserInfo = () => {

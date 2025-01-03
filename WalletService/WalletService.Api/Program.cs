@@ -18,14 +18,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddLogger(config);
-builder.Services.AddCors(options =>
-{
-    var frontendUrl = "http://localhost:3000";
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins(frontendUrl).AllowAnyHeader().AllowAnyMethod();
-    });
-});
+//builder.Services.AddCors(options =>
+//{
+//    var frontendUrl = "http://localhost:3000";
+//    options.AddDefaultPolicy(builder =>
+//    {
+//        builder.WithOrigins(frontendUrl).AllowAnyHeader().AllowAnyMethod();
+//    });
+//});
 var app = builder.Build();
 
 app.AddHttpLogging<Program>();
@@ -42,6 +42,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors();
+//app.UseCors();
 
 app.Run();

@@ -19,14 +19,14 @@ builder.Services
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options =>
-{
-    var frontendUrl = builder.Configuration.GetValue<string>("frontend-url");
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins(frontendUrl).AllowAnyHeader().AllowAnyMethod();
-    });
-});
+//builder.Services.AddCors(options =>
+//{
+//    var frontendUrl = builder.Configuration.GetValue<string>("frontend-url");
+//    options.AddDefaultPolicy(builder =>
+//    {
+//        builder.WithOrigins(frontendUrl).AllowAnyHeader().AllowAnyMethod();
+//    });
+//});
 builder.AddLogger(config);
 
 var app = builder.Build();
@@ -45,7 +45,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors();
+//app.UseCors();
 
 using (var scope = app.Services.CreateScope())
 {
