@@ -14,7 +14,7 @@ export const register = (username: string, email: string, password: string) => {
 
 export const login = (email: string, password: string) => {
   return axios
-    .post("http://localhost:5055/bets/user/Login", {
+    .post(urlUserServiceLogin, {
       email,
       password,
     })

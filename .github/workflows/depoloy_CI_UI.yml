@@ -1,4 +1,4 @@
-name: Deploy to Production Wallet service
+name: Deploy to Production UI Client
 
 on:
   workflow_dispatch: # Ручной запуск через вкладку Actions
