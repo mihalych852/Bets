@@ -13,7 +13,7 @@ namespace WalletService.Service.Helpers
                 .AddAutoMapper(typeof(MappingProfile))
 
                 .AddScoped<CreatedEntityRepository<Transactions>>()
-                .AddScoped<WalletsRepository>();
+                .AddSingleton<WalletsRepository>();
 
             return services;
         }

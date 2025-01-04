@@ -1,6 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
 using Serilog;
 using WalletService.Api.Settings;
 using WalletService.DataAccess;
@@ -14,9 +16,13 @@ namespace WalletService.Api.Helpers
         {
             services.Configure<MongoDBSettings>(config.GetSection(nameof(MongoDBSettings)));
 
+            //var mongoSettings = config.GetSection(nameof(MongoDBSettings));
+            //services.AddDbContextFactory<MongoDBContext>(options => options.UseMongoDB(new MongoClient(mongoSettings.GetValue<string>("Connection"))
+            //    , mongoSettings.GetValue<string>("DatabaseName")));
+
             services
                 .AddScoped<WalletsService>()
-                .AddScoped<DbContext, MongoDBContext>()
+                .AddSingleton<DbContext, MongoDBContext>()
 
                 .AddDbContext<MongoDBContext>();
 
