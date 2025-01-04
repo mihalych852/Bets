@@ -13,7 +13,7 @@ namespace BetsService.Services.Helpers
                 .AddAutoMapper(typeof(MappingProfile))
 
                 .AddScoped<LaterDeletedEntityRepository<EventOutcomes>>()
-                .AddScoped<LaterDeletedEntityRepository<Events>>()
+                .AddSingleton<EventsRepository>()
                 .AddSingleton<BetsRepository>();
 
             return services;

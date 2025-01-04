@@ -5,16 +5,17 @@ using BetsService.Domain;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using BetsService.Services.Exceptions;
 using BetsService.Models;
+using BetsService.DataAccess.Repositories;
 
 namespace BetsService.Services
 {
     public class EventsService
     {
-        private readonly LaterDeletedEntityRepository<Events> _repository;
+        private readonly EventsRepository _repository;
         private readonly ILogger<EventsService> _logger;
         private readonly IMapper _mapper;
 
-        public EventsService(LaterDeletedEntityRepository<Events> eventsRepository
+        public EventsService(EventsRepository eventsRepository
             , ILogger<EventsService> logger
             , IMapper mapper)
         {
