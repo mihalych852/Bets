@@ -57,9 +57,14 @@ public class Program
         if (!ushort.TryParse(strPort, out rabitPort))
             throw new ArgumentException("Не удалось преобразовать порт в число");
 
+        string? rabbitHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_HOST");
+
+        if (string.IsNullOrEmpty(rabbitHost))
+            rabbitHost = "rabbitMq";
+
         var rmqSettings = new RmqSettings()
         {
-            Host = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_HOST") ?? "localhost",
+            Host = rabbitHost,
             VHost = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_VHOST") ?? "/",
             Login = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_USER") ?? "",
             Password = Environment.GetEnvironmentVariable("ASPNETCORE_RABIT_PASSWORD") ?? "",

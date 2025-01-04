@@ -11,7 +11,8 @@ namespace ApiGateway.ApiHost.Requests
         public override DefaultRequestAbstract GetRequest(HttpClient httpClient, string? parameters, object? payload, string requstUrl, HttpContext httpContext)
         {
 
-            return new DefaultRequestGet { Parameters = parameters, requstUrl = requstUrl, HttpClient = httpClient};
+            return new DefaultRequestGet { Parameters = parameters, requstUrl = GetServiceUrl(requstUrl, parameters),
+                HttpClient = httpClient};
         }
     }
 }

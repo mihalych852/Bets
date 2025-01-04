@@ -79,10 +79,10 @@ namespace ApiGateway.ApiHost.Service
                 throw new ArgumentNullException(nameof(_actionName), "Сервис не найден");
             }
 
-            if (!string.IsNullOrEmpty(parametrs))
-            {
-                this._serviceUrl += "?" + parametrs;
-            }
+            //if (!string.IsNullOrEmpty(parametrs))
+            //{
+            //    this._serviceUrl += "?" + parametrs;
+            //}
 
             return this;
         }

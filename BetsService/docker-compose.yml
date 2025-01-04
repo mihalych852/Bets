@@ -6,7 +6,6 @@ services:
       dockerfile: BetsService/BetsService.Api/Dockerfile
     ports:
       - "5039:8080"
-      - "7127:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_DBUSER_BETS=${ASPNETCORE_DBUSER_BETS}

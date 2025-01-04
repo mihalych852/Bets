@@ -15,5 +15,15 @@ namespace ApiGateway.ApiHost.Requests
         /// <param name="payload">обект post запроса</param>
         /// <returns>экземпляр параметров</returns>
         public abstract DefaultRequestAbstract GetRequest(HttpClient httpClient, string? parameters, object? payload, string requstUrl, HttpContext httpContext);
+
+        public virtual string GetServiceUrl(string requstUrl, string? parameters)
+        {
+            if (!string.IsNullOrEmpty(parameters))
+            {
+                return requstUrl += "?" + parameters;
+            }
+
+            return requstUrl;
+        }
     }
 }

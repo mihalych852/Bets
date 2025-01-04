@@ -1,12 +1,14 @@
 services:
-  apigateway.apihost:
-    image: ${DOCKER_REGISTRY-}apigatewayapihost
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
     build:
       context: ..
       dockerfile: ApiGateway/ApiGateway.ApiHost/Dockerfile
     ports:
       - "5055:8080"
       #- "5035:8081"
+    environment:
+      - ASPNETCORE_FRONTEND_URL=${ASPNETCORE_FRONTEND_URL}
 
 networks:
   default:
