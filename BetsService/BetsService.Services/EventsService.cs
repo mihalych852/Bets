@@ -102,7 +102,7 @@ namespace BetsService.Services
                 }
 
                 response.BetsEndTime = request.BetsEndTime;
-                response.Status = EventsStatus.Expected;
+                response.Status = (EventsStatus)request.Status; //EventsStatus.Expected;
                 response.EventStartTime = request.EventStartTime;
                 response.Description = request.Description;
                 response.ModifiedBy = request.ModifiedBy;
