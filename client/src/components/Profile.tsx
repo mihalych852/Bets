@@ -131,7 +131,11 @@ padding: "2px"
                         })
                           .then(function (res) {
                               console.log(res);
-                              axios.get(urlWalletGetBalance+currentUser.id)
+                              axios.get(urlWalletGetBalance, {
+                                                          params: {
+                                                            path : currentUser.id
+                                                          }
+                                                        })
                             .then((response) => {
                                 console.log(response.data);
                                 setbalanceInfo(response.data);
