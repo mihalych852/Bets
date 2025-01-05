@@ -7,14 +7,22 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WalletService.RabbitConsumers/WalletService.RabbitConsumers.csproj", "WalletService.RabbitConsumers/"]
-COPY ["WalletService.Service/WalletService.Service.csproj", "WalletService.Service/"]
-COPY ["WalletService.DataAccess/WalletService.DataAccess.csproj", "WalletService.DataAccess/"]
-COPY ["WalletService.Domain/WalletService.Domain.csproj", "WalletService.Domain/"]
-RUN dotnet restore "./WalletService.RabbitConsumers/WalletService.RabbitConsumers.csproj"
-COPY . .
-WORKDIR "/src/WalletService.RabbitConsumers"
-RUN dotnet build "./WalletService.RabbitConsumers.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Копируем nuget.config и локальные пакеты в контейнер
+COPY ../nuget.config ./
+COPY ../LocalNuget/ ./LocalNuget/
+
+# Копируем всю папку NotificationService в контейнер
+COPY ../WalletService ./WalletService
+
+WORKDIR "/src/WalletService/WalletService.RabbitConsumers"
+
+RUN dotnet restore "WalletService.RabbitConsumers.csproj"
+
+# Копируем остальные файлы проекта WalletService.RabbitConsumers и собираем приложение
+
+COPY WalletService/WalletService.RabbitConsumers/. ./
+RUN dotnet build "WalletService.RabbitConsumers.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
