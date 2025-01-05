@@ -122,11 +122,21 @@ namespace UserServer.WebHost.Controllers.V1
                             nickName = $"{responseUserDto.FirstName} {responseUserDto.LastName}";
                         }
 
-                        await _bus.Publish(new NotificationService.Models.DefaultUserInfo(
+                        using (var source = new CancellationTokenSource(TimeSpan.FromSeconds(15))) // На случай, если за 15 сек. сообщение отправить не получилось (например, не коннектится к рабиту)
+                        {
+                            await _bus.Publish(new NotificationService.Models.DefaultUserInfo(
                             userId,
                             nickName,
                             responseUserDto.Email,
-                            "UserService"));
+                            "UserService")
+                            , source.Token);
+                        }
+
+                        using (var source = new CancellationTokenSource(TimeSpan.FromSeconds(15))) // На случай, если за 15 сек. сообщение отправить не получилось (например, не коннектится к рабиту)
+                        {
+                            await _bus.Publish(new WalletService.Models.AddWalletRequest(userId)
+                            , source.Token);
+                        }
                     }
                 }
 

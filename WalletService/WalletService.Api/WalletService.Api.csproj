@@ -21,10 +21,10 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="10.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="WalletService.Models" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WalletService.Models\WalletService.Models.csproj" />
     <ProjectReference Include="..\WalletService.Service\WalletService.Service.csproj" />
   </ItemGroup>
 

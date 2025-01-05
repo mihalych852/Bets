@@ -16,6 +16,21 @@ services:
       - ASPNETCORE_RABIT_HOST=${ASPNETCORE_RABIT_HOST}
     depends_on:
       - mongoDbWallet
+  walletrabbitconsumers:
+    image: ${DOCKER_REGISTRY-}walletrabbitconsumers
+    build:
+      context: ..
+      dockerfile: WalletService/WalletService.RabbitConsumers/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_DBBASE=db_wallet
+      - ASPNETCORE_RABIT_PORT=${ASPNETCORE_RABIT_PORT}
+      - ASPNETCORE_RABIT_USER=${ASPNETCORE_RABIT_USER}
+      - ASPNETCORE_RABIT_PASSWORD=${ASPNETCORE_RABIT_PASSWORD}
+      - ASPNETCORE_RABIT_VHOST=${ASPNETCORE_RABIT_VHOST}
+      - ASPNETCORE_RABIT_HOST=${ASPNETCORE_RABIT_HOST}
+    depends_on:
+      - mongoDbWallet
   mongoDbWallet:
     image: mongo:latest
     environment:

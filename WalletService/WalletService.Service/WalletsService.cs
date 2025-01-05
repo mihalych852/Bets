@@ -42,6 +42,23 @@ namespace WalletService.Service
             }
         }
 
+        public async Task AddWalletAsync(Guid bettorId)
+        {
+            var wallet = await _walletRepository.GetByIdAsync(bettorId);
+            if (wallet == null)
+            {
+                await _walletRepository.AddAsync(new Wallets()
+                {
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = bettorId.ToString(),
+                    ModifiedBy = Guid.Empty,
+                    ModifiedDate = DateTime.Now,
+                    BettorId = bettorId,
+                    Amount = 0,
+                });
+            }
+        }
+
         public async Task<Guid> CreditAsync(TransactionsRequest request
             , CancellationToken ct)
         {

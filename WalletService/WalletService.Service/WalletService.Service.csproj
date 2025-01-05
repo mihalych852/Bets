@@ -13,12 +13,12 @@
     <PackageReference Include="MassTransit" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
     <PackageReference Include="NotificationService.Models" Version="1.0.0" />
+    <PackageReference Include="WalletService.Models" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WalletService.DataAccess\WalletService.DataAccess.csproj" />
     <ProjectReference Include="..\WalletService.Domain\WalletService.Domain.csproj" />
-    <ProjectReference Include="..\WalletService.Models\WalletService.Models.csproj" />
   </ItemGroup>
 
 </Project>
