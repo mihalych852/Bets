@@ -1,24 +1,24 @@
 ﻿using Microsoft.Extensions.Logging;
 using AutoMapper;
-using Bets.Abstractions.DataAccess.EF.Repositories;
 using BetsService.Domain;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using BetsService.Services.Exceptions;
 using BetsService.Models;
+using BetsService.DataAccess.Repositories;
 
 namespace BetsService.Services
 {
     public class EventOutcomesService
     {
-        private readonly LaterDeletedEntityRepository<EventOutcomes> _repository;
+        private readonly EventOutcomesRepository _repository; 
         private readonly ILogger<EventOutcomesService> _logger;
         private readonly IMapper _mapper;
 
-        public EventOutcomesService(LaterDeletedEntityRepository<EventOutcomes> EventOutcomesRepository
+        public EventOutcomesService(EventOutcomesRepository eventOutcomesRepository
             , ILogger<EventOutcomesService> logger
             , IMapper mapper)
         {
-            _repository = EventOutcomesRepository;
+            _repository = eventOutcomesRepository;
             _logger = logger;
             _mapper = mapper;
         }
@@ -162,6 +162,16 @@ namespace BetsService.Services
                 _logger.LogError(ex, $"[EventOutcomesService][DeleteListEventOutcomesAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
+        }
+
+        public async Task<int> CloseAsync(IEnumerable<Guid> ids)
+        {
+            int updCount = 0;
+            if (ids != null && ids.Count() > 0)
+            {
+                updCount = await _repository.CloseAsync(ids);
+            }
+            return updCount;
         }
 
         private static decimal CalcCoef()

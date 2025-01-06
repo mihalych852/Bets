@@ -5,9 +5,7 @@ using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using BetsService.Api.Extensions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Text.Json;
-using System;
+using BetsService.Models.Enums;
 
 namespace BetsService.Api.Controllers
 {
@@ -17,14 +15,17 @@ namespace BetsService.Api.Controllers
     {
         private readonly ILogger<EventsController> _logger;
         private readonly EventsService _service;
+        private readonly EventOutcomesService _outcomesService;
         private readonly IDistributedCache _cache;
 
         public EventsController(ILogger<EventsController> logger
             , EventsService service
+            , EventOutcomesService outcomesService
             , IDistributedCache cache)
         {
             _logger = logger;
             _service = service;
+            _outcomesService = outcomesService;
             _cache = cache;
         }
 
@@ -106,6 +107,21 @@ namespace BetsService.Api.Controllers
             try
             {
                 var result = await _service.UpdateEventAsync(request);
+
+                if (result != null) 
+                {
+                    if (result.Status == EventsStatus.Cancelled)
+                    {
+                        var ids = result.EventOutcomes.Select(x => x.Id);
+                        _ = _outcomesService.CloseAsync(ids);
+                    }
+                    else if (result.Status == EventsStatus.Completed)
+                    {
+                        var ids = result.EventOutcomes.Select(x => x.Id);
+                        _ = _outcomesService.CloseAsync(ids);
+
+                    }
+                }
 
                 var cachKey = "Event." + request.Id;
                 await _cache.SetAsync(cachKey, result, _logger);

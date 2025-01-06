@@ -90,7 +90,7 @@ namespace BetsService.Api.Controllers
         /// <returns>EventOutcomeResponse</returns>
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateEventAsync([FromBody] EventOutcomeUpdateRequest request)
+        public async Task<IActionResult> UpdateEventOutcomeAsync([FromBody] EventOutcomeUpdateRequest request)
         {
             try
             {

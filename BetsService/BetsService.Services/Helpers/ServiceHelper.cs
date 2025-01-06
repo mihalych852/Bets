@@ -1,6 +1,4 @@
-﻿using Bets.Abstractions.DataAccess.EF.Repositories;
-using BetsService.DataAccess.Repositories;
-using BetsService.Domain;
+﻿using BetsService.DataAccess.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BetsService.Services.Helpers
@@ -12,7 +10,7 @@ namespace BetsService.Services.Helpers
             services
                 .AddAutoMapper(typeof(MappingProfile))
 
-                .AddScoped<LaterDeletedEntityRepository<EventOutcomes>>()
+                .AddSingleton<EventOutcomesRepository>()
                 .AddSingleton<EventsRepository>()
                 .AddSingleton<BetsRepository>();
 
