@@ -19,6 +19,28 @@ namespace BetsService.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Получить все ставки для конкретного исхода
+        /// </summary>
+        /// <param name="bettorId">Идентификатор исхода</param>
+        public async Task<List<Domain.Bets>> GetListByOutcomeIdAsync(Guid outcomeId)
+        {
+            return await _entitySet.Where(x => x.EventOutcomesId == outcomeId).ToListAsync();
+        }
+
+        /// <summary>
+        /// Получить идентификаторы всех ставок для конкретных исходов
+        /// </summary>
+        /// <param name="outcomeIds">Идентификаторы исходов</param>
+        public async Task<List<Guid>> GetIdsByOutcomeIdAsync(IEnumerable<Guid> outcomeIds)
+        {
+            return await _entitySet
+                .Where(x => outcomeIds.Contains(x.EventOutcomesId) 
+                        && x.State != Domain.BetsState.Cancelled)
+                .Select(x => x.Id)
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Обновляет непосредственно статус для нескольких ставок
         /// </summary>
         /// <param name="request">Данные для обновления</param>

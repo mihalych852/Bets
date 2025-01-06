@@ -4,6 +4,7 @@ using BetsService.Services.Exceptions;
 using BetsService.Models;
 using BetsService.DataAccess.Repositories;
 using BetsService.DataAccess.DTO;
+using BetsService.Domain;
 
 namespace BetsService.Services
 {
@@ -36,10 +37,10 @@ namespace BetsService.Services
 
             try
             {
-                var address = _mapper.Map<Domain.Bets>(request);
-                await _repository.AddAsync(address);
+                var bets = _mapper.Map<Domain.Bets>(request);
+                await _repository.AddAsync(bets);
 
-                return address.Id;
+                return bets.Id;
             }
             catch (Exception ex)
             {
@@ -105,6 +106,32 @@ namespace BetsService.Services
             try
             {
                 var count = await _repository.UpdateStatesAsync(request);
+                return count;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[BettingService][UpdateStatesAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<int> UpdateStatesAsync(Dictionary<int, IEnumerable<Guid>> dict)
+        {
+            try
+            {
+                int count = 0;
+                foreach (var kvp in dict)
+                {
+                    var ids = await _repository.GetIdsByOutcomeIdAsync(kvp.Value);
+                    if (ids != null && ids.Count > 0)
+                    {
+                        count += await UpdateStatesAsync(new BetsStateUpdateRequest()
+                        {
+                            Ids = ids,
+                            State = (BetsState)kvp.Key
+                        });
+                    }
+                }
                 return count;
             }
             catch (Exception ex)

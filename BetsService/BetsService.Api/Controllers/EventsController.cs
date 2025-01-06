@@ -16,16 +16,19 @@ namespace BetsService.Api.Controllers
         private readonly ILogger<EventsController> _logger;
         private readonly EventsService _service;
         private readonly EventOutcomesService _outcomesService;
+        private readonly BettingService _betsService;
         private readonly IDistributedCache _cache;
 
         public EventsController(ILogger<EventsController> logger
             , EventsService service
             , EventOutcomesService outcomesService
+            , BettingService betsService
             , IDistributedCache cache)
         {
             _logger = logger;
             _service = service;
             _outcomesService = outcomesService;
+            _betsService = betsService;
             _cache = cache;
         }
 
@@ -110,16 +113,41 @@ namespace BetsService.Api.Controllers
 
                 if (result != null) 
                 {
-                    if (result.Status == EventsStatus.Cancelled)
+                    if (result.Status == EventsStatus.Cancelled || result.Status == EventsStatus.Completed)
                     {
                         var ids = result.EventOutcomes.Select(x => x.Id);
-                        _ = _outcomesService.CloseAsync(ids);
-                    }
-                    else if (result.Status == EventsStatus.Completed)
-                    {
-                        var ids = result.EventOutcomes.Select(x => x.Id);
-                        _ = _outcomesService.CloseAsync(ids);
+                        var cnt = await _outcomesService.CloseAsync(ids);
+                        if (cnt > 0)
+                        {
+                            var dict = new Dictionary<int, IEnumerable<Guid>>();
 
+                            if (result.Status == EventsStatus.Cancelled)
+                            {
+                                dict.Add((int)BetsState.Cancelled, result.EventOutcomes.Select(x => x.Id));
+                            }
+                            else
+                            {
+                                var happenedOutcomeIds = result.EventOutcomes
+                                    .Where(x => x.IsHappened == true)
+                                    .Select(x => x.Id)
+                                    .ToList();
+                                if (happenedOutcomeIds.Count > 0)
+                                {
+                                    dict.Add((int)BetsState.AwaitingPayment, happenedOutcomeIds);
+                                }
+
+                                var notHappenedOutcomeIds = result.EventOutcomes
+                                    .Where(x => x.IsHappened != true)
+                                    .Select(x => x.Id)
+                                    .ToList();
+                                if (notHappenedOutcomeIds.Count > 0)
+                                {
+                                    dict.Add((int)BetsState.Completed, notHappenedOutcomeIds);
+                                }
+                            }
+
+                            _ = await _betsService.UpdateStatesAsync(dict);
+                        }
                     }
                 }
 
