@@ -47,6 +47,7 @@ jobs:
             done
 
             dotnet restore ./NotificationService/NotificationService.Models/NotificationService.Models.csproj --configfile ./nuget.config
+            dotnet restore ./WalletService/WalletService.Models/WalletService.Models.csproj --configfile ./nuget.config
 
             # Сборка всех .csproj файлов
             for csproj in $(find ./Abstractions -name "*.csproj"); do
@@ -55,6 +56,7 @@ jobs:
             done
 
             dotnet build ./NotificationService/NotificationService.Models/NotificationService.Models.csproj --configuration Release
+            dotnet build ./WalletService/WalletService.Models/WalletService.Models.csproj --configuration Release
 
             # Упаковка всех проектов в NuGet пакеты
             for csproj in $(find ./Abstractions -name "*.csproj"); do
@@ -63,6 +65,7 @@ jobs:
             done
 
             dotnet pack ./NotificationService/NotificationService.Models/NotificationService.Models.csproj --configuration Release --output ~/LocalNuget
+            dotnet pack ./WalletService/WalletService.Models/WalletService.Models.csproj --configuration Release --output ~/LocalNuget
 
             # Восстановление и сборка решений
             for solution in ./ApiGateway/*.sln ./NotificationService/*.sln ./UserService/*.sln ./WalletService/*.sln ./BetsService/*.sln; do
