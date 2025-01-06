@@ -3,6 +3,7 @@ using BetsService.Models;
 using BetsService.Services;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace BetsService.Api.Controllers
 {
@@ -12,12 +13,15 @@ namespace BetsService.Api.Controllers
     {
         private readonly ILogger<EventOutcomesController> _logger;
         private readonly EventOutcomesService _service;
+        private readonly IDistributedCache _cache;
 
         public EventOutcomesController(ILogger<EventOutcomesController> logger
-            , EventOutcomesService service)
+            , EventOutcomesService service
+            , IDistributedCache cache)
         {
             _logger = logger;
             _service = service;
+            _cache = cache;
         }
 
         /// <summary>
@@ -34,6 +38,10 @@ namespace BetsService.Api.Controllers
             try
             {
                 var EventId = await _service.AddEventOutcomeAsync(request, ct);
+
+                var cachKey = "Event." + request.EventId;
+                await _cache.RemoveAsync(cachKey);
+
                 return Ok(CreateResponse.CreateSuccessResponse(EventId));
             }
             catch (Exception ex)
@@ -95,6 +103,10 @@ namespace BetsService.Api.Controllers
             try
             {
                 var result = await _service.UpdateEventOutcomeAsync(request);
+
+                var cachKey = "Event." + result.EventId;
+                await _cache.RemoveAsync(cachKey);
+
                 return Ok(result);
             }
             catch (Exception ex)
