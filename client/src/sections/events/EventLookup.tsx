@@ -51,7 +51,7 @@ export default function EventLookup(props: eventDTO){
 
                 </ul>
                 <div className="card-footer text-muted">
-                    <p>Открыто до: {date.getDate()}.{date.getMonth()}.{date.getFullYear()}</p>
+                    <p>Открыто до: {date.getDate()}.{date.getMonth()+1}.{date.getFullYear()}</p>
                 </div>
             </div>
         </div>

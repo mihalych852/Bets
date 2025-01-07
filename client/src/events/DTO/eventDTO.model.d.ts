@@ -4,5 +4,5 @@ export interface eventDTO {
     eventOutcomes?: eventOutcomeDTO[];
     betsEndTime: Date;
     eventStartTime: Date;
-    //BetsEndTime
+    status: eventsStatus;
 }

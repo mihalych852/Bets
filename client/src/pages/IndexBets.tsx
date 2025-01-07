@@ -20,6 +20,6 @@ export default function IndexBets(){
     }, [])    
     return(
     <>
-        <EventList events={data}/>
+        <EventList events={data.filter(x => x.status === 1)}/>
     </>
 )};

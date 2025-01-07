@@ -18,6 +18,7 @@ export const urlEventsEdit = `${baseURL}/bets/UpdateEvent`;
 export const urlEventsGetById = `${baseURL}/bets/GetEventById`;
 
 export const urlOutComeCreate = `${baseURL}/bets/AddEventOutcome`;
+export const urlOutComeUpdate = `${baseURL}/bets/UpdateEventOutcomes`;
 
 export const urlBetCreate = `${baseURL}/bets/AddBet`;
 export const urlBetGetForUser = `${baseURL}/bets/GetBetsByBettorId/`;

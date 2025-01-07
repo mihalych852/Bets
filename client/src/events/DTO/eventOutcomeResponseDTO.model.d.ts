@@ -3,4 +3,6 @@ export interface eventOutcomeRequestDTO{
     eventId: string;
     createdBy: string;
     betsClosed: boolean;
+    isHappened?: boolean;
+
 }

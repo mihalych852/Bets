@@ -23,6 +23,42 @@ export default function EditEvent(){
     const [loading, setLoading] = useState<boolean>(true);
     const [eventInfo, setEventInfo] = useState<eventUpdateDTO>();
     const [outComes, setOutcomes] = useState<eventOutcomeDTO[]>([]);
+    
+    // useEffect(() => {
+    //   const event = {id: "b314e08e-5e6c-4215-b8df-506e884960f7",
+    //     description: "Реал Мадрид - Барселона",
+    //     betsEndTime: new Date("13-12-2024"),
+    //     eventStartTime: new Date("11-12-2024"),
+    //     eventOutcomes: [{
+    //         id: "b314e08e-5e6c-4215-b8df-506e884960f8",
+    //         description: "outcome 1",
+    //         currentOdd: 2,
+    //         isHappened: false,
+    //         eventId: "b314e08e-5e6c-4215-b8df-506e884960f7",
+    //         createdBy: "",
+    //         betsClosed: false
+    //       }, {
+    //         id: "b314e08e-5e6c-4215-b8df-506e884960f5",
+    //         description: "outcome 2",
+    //         currentOdd: 4,
+    //         isHappened: true,
+    //         eventId: "b314e08e-5e6c-4215-b8df-506e884960f7",
+    //         createdBy: "",
+    //         betsClosed: false
+    //     },{
+    //       id: "b314e08e-5e6c-4215-b8df-506e884960f9",
+    //       description: "outcome 2",
+    //       currentOdd: 4,
+    //       isHappened: undefined,
+    //       eventId: "b314e08e-5e6c-4215-b8df-506e884960f7",
+    //       createdBy: "",
+    //       betsClosed: false
+    //   },
+    //     ],
+    //     status: 1};
+    //     setEventInfo(event);
+    //     setOutcomes(event.eventOutcomes);
+    // }, [])
 
     useEffect(() => {
             axios.get(urlEventsGetById, {
@@ -103,8 +139,10 @@ export default function EditEvent(){
     </div>
     <div>
         <h5>Список исходов</h5>
+        
         <div className="row">
-          {outComes ? 
+          {
+          (eventInfo?.status == 2 || eventInfo?.status == 3) ? <></> :  outComes ? 
             <OutcomeForm model={{description: '', eventId: id, createdBy: userLogin}}  
             onSubmit={handleSave}/>
             :
@@ -114,10 +152,10 @@ export default function EditEvent(){
         <div className="mb-3">
           <Table striped className="w-100">
             <thead>
-              <tr><th>Описание</th><th>Коэф.</th><th>Статус</th></tr>
+              <tr><th>Описание</th><th>Коэф.</th><th></th></tr>
             </thead>
             <tbody>
-              {outComes?.map(events => <OutcomeLookupForList {...events} key={events.id}/>)}
+              {outComes?.map(events => <OutcomeLookupForList model={events} status={eventInfo?.status} key={events.id}/>)}
 
             </tbody>
           </Table>

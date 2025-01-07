@@ -18,8 +18,8 @@ export default function EventLookupRow(props: eventFullDTO){
             
         </td>
         <td>{props.description}</td>
-        <td>{dateStart.getDate()}.{dateStart.getMonth()}.{dateStart.getFullYear()}</td>
-        <td>{date.toLocaleString()}</td>
+        <td>{dateStart.getDate()}.{dateStart.getMonth()+1}.{dateStart.getFullYear()}</td>
+        <td>{date.getDate()}.{date.getMonth()+1}.{date.getFullYear()}</td>
         <td><ul>{props.eventOutcomes?.map(o => <OutcomeLookupForAdmin {...o} key={o.id}/>)}</ul></td>
         <td>{eventsStatus[props.status]} </td>
     </tr>
